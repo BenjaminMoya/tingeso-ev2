@@ -4,6 +4,7 @@ import com.project.credit_service.entity.CreditEntity;
 import com.project.credit_service.repository.CreditRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,9 @@ public class CreditService {
 
     @Autowired
     CreditRepository creditRepository;
+
+    @Autowired
+    RestTemplate restTemplate;
 
     public ArrayList<CreditEntity> getUserCredits(long userId){
         return creditRepository.findByCreditUserId(userId);
@@ -42,15 +46,9 @@ public class CreditService {
         }
     }
 
-    public double creditAmountSimulation(double requestedAmount,double interest,int years){
-
-        double convertedInterest = (interest/12)/100;
-        double powerPeriod = Math.pow((1+convertedInterest),years*12);
-        return Math.ceil(requestedAmount * ( (convertedInterest*powerPeriod) / (powerPeriod-1) ));
-    }
 
     public int relationCI(double requestedAmount,double interest,int years,double monthlyEntry){
-        double percentage = creditAmountSimulation(requestedAmount,interest,years)/monthlyEntry;
+        double percentage = (restTemplate.getForObject("http://localhost:8095/simulation/"+requestedAmount+"/"+interest+"/"+years, Double.class))/monthlyEntry;
         if(percentage > 0.35){
             return 0;
         } else {
@@ -70,7 +68,7 @@ public class CreditService {
     public double finalMonthlyAmount(double requestedAmount,double interest,int years){
 
         double desgravamen = requestedAmount * 0.0003;
-        double monthlyAmount = creditAmountSimulation(requestedAmount,interest,years);
+        double monthlyAmount = restTemplate.getForObject("http://localhost:8095/simulation/"+requestedAmount+"/"+interest+"/"+years, Double.class);
         return monthlyAmount + 20000 + desgravamen;
     }
 
