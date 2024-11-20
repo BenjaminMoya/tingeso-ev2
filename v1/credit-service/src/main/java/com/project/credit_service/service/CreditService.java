@@ -46,25 +46,6 @@ public class CreditService {
         }
     }
 
-
-    public int relationCI(double requestedAmount,double interest,int years,double monthlyEntry){
-        double percentage = (restTemplate.getForObject("http://localhost:8095/simulation/"+requestedAmount+"/"+interest+"/"+years, Double.class))/monthlyEntry;
-        if(percentage > 0.35){
-            return 0;
-        } else {
-            return 1;
-        }
-    }
-
-    //debtsAmount es aquella que ya tiene integrada la cuota proyectada mensual
-    public int relationDI(double monthlyAmount,double debtsMonthlyAmount,double creditMonthlyAmount){
-        if((monthlyAmount*0.5) > (debtsMonthlyAmount + creditMonthlyAmount)){
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
     public double finalMonthlyAmount(double requestedAmount,double interest,int years){
 
         double desgravamen = requestedAmount * 0.0003;
