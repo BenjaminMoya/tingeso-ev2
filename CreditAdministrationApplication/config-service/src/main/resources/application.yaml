@@ -8,3 +8,5 @@ spring:
           default-label: main
           uri: https://github.com/BenjaminMoya/tingeso-ev2/CreditAdministrationApplication
           search-paths: config-data
+  application:
+    name: config-service
