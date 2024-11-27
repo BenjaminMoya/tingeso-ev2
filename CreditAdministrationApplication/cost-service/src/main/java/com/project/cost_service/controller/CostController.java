@@ -1,8 +1,12 @@
 package com.project.cost_service.controller;
 
-import com.project.costs_service.service.CostService;
+import com.project.cost_service.entity.CostEntity;
+import com.project.cost_service.service.CostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/cost")
@@ -12,19 +16,16 @@ public class CostController {
     @Autowired
     CostService costService;
 
-    @GetMapping("/month/{requestedAmount}/{interest}/{years}")
-    public double finalMonthlyAmount(@PathVariable double requestedAmount,
-                                     @PathVariable double interest,
-                                     @PathVariable int years){
-
-        return costService.finalMonthlyAmount(requestedAmount,interest,years);
+    @GetMapping("/")
+    public List<CostEntity> getAll(){
+        return costService.getCosts();
     }
 
-    @GetMapping("/final/{monthlyAmount}/{years}/{requestedAmount}")
-    public double finalCreditAmount(@PathVariable double monthlyAmount,
-                                    @PathVariable int years,
-                                    @PathVariable double requestedAmount){
-
-        return costService.finalCreditAmount(monthlyAmount,years,requestedAmount);
+    @PostMapping("/{requestedAmount}/{interest}/{years}/{creditId}")
+    public ResponseEntity<CostEntity> saveCost(@PathVariable Double requestedAmount,
+                                               @PathVariable Double interest,
+                                               @PathVariable int years,
+                                               @PathVariable Long creditId){
+        return ResponseEntity.ok(costService.saveCost(requestedAmount,interest,years,creditId));
     }
 }
