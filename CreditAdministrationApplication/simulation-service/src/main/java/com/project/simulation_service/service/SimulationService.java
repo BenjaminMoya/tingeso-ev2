@@ -5,11 +5,17 @@ import com.project.simulation_service.repository.SimulationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SimulationService {
 
     @Autowired
     SimulationRepository simulationRepository;
+
+    public List<SimulationEntity> getSimulations(){
+        return simulationRepository.findAll();
+    }
 
     public double creditAmountSimulation(double requestedAmount,double interest,int years){
 

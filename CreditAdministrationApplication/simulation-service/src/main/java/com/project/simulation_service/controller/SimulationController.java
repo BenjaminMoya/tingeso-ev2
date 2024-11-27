@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/simulation")
 @CrossOrigin("*")
@@ -14,8 +16,13 @@ public class SimulationController {
     @Autowired
     SimulationService simulationService;
 
-    @GetMapping("/{amount}/{interest}/{years}/{userId}/{creditId}")
-    public ResponseEntity<SimulationEntity> creditAmountSimulation(@PathVariable double amount,
+    @GetMapping("/")
+    public ResponseEntity<List<SimulationEntity>> getAll(){
+        return ResponseEntity.ok(simulationService.getSimulations());
+    }
+
+    @PostMapping("/{amount}/{interest}/{years}/{userId}/{creditId}")
+    public ResponseEntity<SimulationEntity> saveSimulation(@PathVariable double amount,
                                                                    @PathVariable double interest,
                                                                    @PathVariable int years,
                                                                    @PathVariable Long userId,
