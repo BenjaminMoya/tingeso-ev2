@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/CreditAdministrationApplication/config-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CreditAdministrationApplication/cost-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CreditAdministrationApplication/credit-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CreditAdministrationApplication/eureka-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CreditAdministrationApplication/evaluation-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CreditAdministrationApplication/file-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CreditAdministrationApplication/gateway-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CreditAdministrationApplication/simulation-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CreditAdministrationApplication/tracking-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CreditAdministrationApplication/user-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/v1/config-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/v1/costs-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/v1/credit-service/src/main/java" charset="UTF-8" />

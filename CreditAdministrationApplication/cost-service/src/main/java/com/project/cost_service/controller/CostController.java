@@ -1,4 +1,4 @@
-package com.project.costs_service.controller;
+package com.project.cost_service.controller;
 
 import com.project.costs_service.service.CostService;
 import org.springframework.beans.factory.annotation.Autowired;

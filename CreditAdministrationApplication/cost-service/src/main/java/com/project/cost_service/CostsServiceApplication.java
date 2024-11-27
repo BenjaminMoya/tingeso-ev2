@@ -1,4 +1,4 @@
-package com.project.costs_service;
+package com.project.cost_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

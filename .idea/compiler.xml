@@ -7,9 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="eureka-service" />
-        <module name="costs-service" />
-        <module name="evaluation-service" />
+        <module name="cost-service" />
         <module name="config-service" />
+        <module name="evaluation-service" />
         <module name="credit-service" />
         <module name="gateway-service" />
         <module name="user-service" />
@@ -18,10 +18,14 @@
         <module name="tracking-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="costs-service" target="11" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="config-service" options="-parameters" />
+      <module name="cost-service" options="-parameters" />
       <module name="costs-service" options="-parameters" />
       <module name="credit-service" options="-parameters" />
       <module name="eureka-service" options="-parameters" />

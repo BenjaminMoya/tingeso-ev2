@@ -1,4 +1,4 @@
-package com.project.costs_service.config;
+package com.project.cost_service.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

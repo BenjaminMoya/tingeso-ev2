@@ -14,6 +14,16 @@
         <option value="$PROJECT_DIR$/v1/tracking-service/pom.xml" />
         <option value="$PROJECT_DIR$/v1/evaluation-service/pom.xml" />
         <option value="$PROJECT_DIR$/v1/simulation-service/pom.xml" />
+        <option value="$PROJECT_DIR$/CreditAdministrationApplication/config-service/pom.xml" />
+        <option value="$PROJECT_DIR$/CreditAdministrationApplication/user-service/pom.xml" />
+        <option value="$PROJECT_DIR$/CreditAdministrationApplication/gateway-service/pom.xml" />
+        <option value="$PROJECT_DIR$/CreditAdministrationApplication/eureka-service/pom.xml" />
+        <option value="$PROJECT_DIR$/CreditAdministrationApplication/cost-service/pom.xml" />
+        <option value="$PROJECT_DIR$/CreditAdministrationApplication/credit-service/pom.xml" />
+        <option value="$PROJECT_DIR$/CreditAdministrationApplication/evaluation-service/pom.xml" />
+        <option value="$PROJECT_DIR$/CreditAdministrationApplication/file-service/pom.xml" />
+        <option value="$PROJECT_DIR$/CreditAdministrationApplication/simulation-service/pom.xml" />
+        <option value="$PROJECT_DIR$/CreditAdministrationApplication/tracking-service/pom.xml" />
       </list>
     </option>
   </component>
