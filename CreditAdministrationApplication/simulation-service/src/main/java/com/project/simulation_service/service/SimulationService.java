@@ -24,19 +24,13 @@ public class SimulationService {
         return Math.ceil(requestedAmount * ( (convertedInterest*powerPeriod) / (powerPeriod-1) ));
     }
 
-    public SimulationEntity saveSimulation(double requestedAmount,double interest,int years,Long userId,Long creditId){
-
-        SimulationEntity temp = simulationRepository.findByCreditId(creditId);
-        if(temp != null){
-
-            return null;
-        }
+    public SimulationEntity saveSimulation(double requestedAmount,double interest,int years,Long userId){
 
         SimulationEntity simulation = new SimulationEntity();
         simulation.setUserId(userId);
-        simulation.setCreditId(creditId);
-        simulation.setAmount(creditAmountSimulation(requestedAmount,interest,years));
-
+        simulation.setMonthlyAmount(creditAmountSimulation(requestedAmount,interest,years));
+        simulation.setFinalAmount(simulation.getMonthlyAmount()*12*years);
         return simulationRepository.save(simulation);
+
     }
 }

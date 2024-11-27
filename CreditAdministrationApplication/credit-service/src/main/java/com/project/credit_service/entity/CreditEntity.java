@@ -17,15 +17,15 @@ public class CreditEntity {
     @Column(unique = true,nullable = false)
     private Long creditId;
 
-    private long creditUserId;
-    private double creditPropertyAmount;
-    private double creditRequestedAmount;
-    private double creditProposedAmount;
+    private Long creditUserId;
+    private Long creditCostId;
     private int creditPhase;
     private int creditTerm;
+    private double creditPropertyAmount;
+    private double creditRequestedAmount;
     private String creditFirmDate;
+    private String creditReason;
 
     // Primera = 1, Segunda = 2, Comercial = 3, Remodelacion = 4
     private int creditType;
-    private String creditReason;
 }

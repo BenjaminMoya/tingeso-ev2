@@ -21,12 +21,11 @@ public class SimulationController {
         return ResponseEntity.ok(simulationService.getSimulations());
     }
 
-    @PostMapping("/{amount}/{interest}/{years}/{userId}/{creditId}")
+    @PostMapping("/save/{amount}/{interest}/{years}/{userId}")
     public ResponseEntity<SimulationEntity> saveSimulation(@PathVariable double amount,
                                                                    @PathVariable double interest,
                                                                    @PathVariable int years,
-                                                                   @PathVariable Long userId,
-                                                                   @PathVariable Long creditId){
-        return ResponseEntity.ok(simulationService.saveSimulation(amount,interest,years,userId,creditId));
+                                                                   @PathVariable Long userId){
+        return ResponseEntity.ok(simulationService.saveSimulation(amount,interest,years,userId));
     }
 }

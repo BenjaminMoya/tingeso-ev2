@@ -21,6 +21,10 @@ public class CostService {
         return costRepository.findAll();
     }
 
+    public CostEntity getByCreditId(Long creditId){
+        return costRepository.findByCreditId(creditId);
+    }
+
     public double finalMonthlyAmount(double requestedAmount,double interest,int years){
 
         double desgravamen = requestedAmount * 0.0003;

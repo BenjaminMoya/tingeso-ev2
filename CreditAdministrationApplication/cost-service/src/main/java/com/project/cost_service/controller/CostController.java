@@ -21,7 +21,12 @@ public class CostController {
         return costService.getCosts();
     }
 
-    @PostMapping("/{requestedAmount}/{interest}/{years}/{creditId}")
+    @GetMapping("/getByCreditId/{id}")
+    public ResponseEntity<CostEntity> getByCreditId(@PathVariable Long id){
+        return ResponseEntity.ok(costService.getByCreditId(id));
+    }
+
+    @PostMapping("/save/{requestedAmount}/{interest}/{years}/{creditId}")
     public ResponseEntity<CostEntity> saveCost(@PathVariable Double requestedAmount,
                                                @PathVariable Double interest,
                                                @PathVariable int years,

@@ -84,7 +84,7 @@ public class UserService {
 
     public double transferAmount(Long userId,Long creditId){
         UserEntity userTemp = userRepository.findByUserId(userId);
-        CreditEntity creditTemp = restTemplate.getForObject("http://localhost:8091/credit/get/"+creditId,CreditEntity.class);
+        CreditEntity creditTemp = restTemplate.getForObject("http://credit-service/credit/get/"+creditId,CreditEntity.class);
         double amount = userTemp.getUserBalance()+creditTemp.getCreditRequestedAmount();
         userTemp.setUserBalance(amount);
         try{

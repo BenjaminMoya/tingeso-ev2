@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface FileRepository extends JpaRepository<FileEntity,Long> {
 
     FileEntity findByCreditIdAndType(long creditId, int type);
-    FileEntity findByCreditId(long creditId);
     void deleteByCreditId(long creditId);
 }

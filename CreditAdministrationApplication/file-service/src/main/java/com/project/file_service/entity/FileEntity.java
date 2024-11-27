@@ -17,7 +17,7 @@ public class FileEntity {
     @Column(unique = true,nullable = false)
     private Long fileId;
 
-    private long creditId;
+    private Long creditId;
     private String filename;
 
     // 1=CI,2=CA,3=HC,4=EPV,5=EFN,6=PDN,7=PR,8=CAA,9=Contrato
