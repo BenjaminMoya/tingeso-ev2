@@ -8,7 +8,7 @@
 		<version>2.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>com.tutorial</groupId>
 	<artifactId>eureka-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>eureka-service</name>
@@ -29,12 +29,6 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-prometheus</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
