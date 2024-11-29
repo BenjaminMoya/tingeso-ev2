@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Table(name = "credit")
+@Table(name = "credits")
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreditEntity {
@@ -18,8 +18,6 @@ public class CreditEntity {
     private Long creditId;
 
     private Long creditUserId;
-    private Long creditCostId;
-    private int creditPhase;
     private int creditTerm;
     private double creditPropertyAmount;
     private double creditRequestedAmount;

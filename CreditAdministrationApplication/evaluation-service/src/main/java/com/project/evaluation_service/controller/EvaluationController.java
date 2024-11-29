@@ -12,19 +12,21 @@ public class EvaluationController {
     @Autowired
     EvaluationService evaluationService;
 
-    @GetMapping("/relationCI/{requestedAmount}/{interest}/{years}/{monthlyEntry}")
-    public int relationCI(@PathVariable double requestedAmount,
+    @GetMapping("/relationCI/{creditId}/{requestedAmount}/{interest}/{years}/{monthlyEntry}")
+    public int relationCI(@PathVariable Long creditId,
+                          @PathVariable double requestedAmount,
                           @PathVariable double interest,
                           @PathVariable int years,
                           @PathVariable double monthlyEntry){
-        return evaluationService.relationCI(requestedAmount,interest,years,monthlyEntry);
+        return evaluationService.relationCI(creditId,requestedAmount,interest,years,monthlyEntry);
     }
 
-    @GetMapping("/relationDI/{monthlyAmount}/{debtsMonthlyAmount}/{creditMonthlyAmount}")
-    public int relationDI(@PathVariable double monthlyAmount,
+    @GetMapping("/relationDI/{creditId}{monthlyAmount}/{debtsMonthlyAmount}/{creditMonthlyAmount}")
+    public int relationDI(@PathVariable Long creditId,
+                          @PathVariable double monthlyAmount,
                           @PathVariable double debtsMonthlyAmount,
                           @PathVariable double creditMonthlyAmount){
-        return evaluationService.relationDI(monthlyAmount,debtsMonthlyAmount,creditMonthlyAmount);
+        return evaluationService.relationDI(creditId,monthlyAmount,debtsMonthlyAmount,creditMonthlyAmount);
     }
 
     @PostMapping("/min/{userId}/{creditAmount}")

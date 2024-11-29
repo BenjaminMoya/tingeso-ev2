@@ -11,5 +11,4 @@ public interface CreditRepository extends JpaRepository<CreditEntity,Long> {
 
     CreditEntity findByCreditId(long creditId);
     ArrayList<CreditEntity> findByCreditUserId(long creditUserId);
-    ArrayList<CreditEntity> findByCreditPhase(int creditPhase);
 }

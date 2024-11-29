@@ -16,14 +16,14 @@ public class TrackingController {
     @Autowired
     TrackingService trackingService;
 
-    @PostMapping("/save/{id}")
-    public ResponseEntity<TrackingEntity> saveTracking(@PathVariable Long id){
-        return ResponseEntity.ok(trackingService.saveTracking(id));
+    @PostMapping("/save")
+    public ResponseEntity<TrackingEntity> saveTracking(@RequestBody TrackingEntity tracking){
+        return ResponseEntity.ok(trackingService.saveTracking(tracking));
     }
 
     @PutMapping("/update")
     public ResponseEntity<TrackingEntity> updateTracking(@RequestBody TrackingEntity tracking){
-        return ResponseEntity.ok(trackingService.updateTracking(tracking));
+        return ResponseEntity.ok(trackingService.saveTracking(tracking));
     }
 
     @GetMapping("/")

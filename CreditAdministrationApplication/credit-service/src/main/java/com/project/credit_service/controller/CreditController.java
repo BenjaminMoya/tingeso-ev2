@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/credit")
@@ -21,14 +22,14 @@ public class CreditController {
         return ResponseEntity.ok(creditService.getUserCredits(userId));
     }
 
-    @GetMapping("/phase/{creditPhase}")
-    public ResponseEntity<ArrayList<CreditEntity>> getPhaseCredits(@PathVariable int creditPhase){
-        return ResponseEntity.ok(creditService.getPhaseCredits(creditPhase));
-    }
-
     @GetMapping("/get/{creditId}")
     public ResponseEntity<CreditEntity> getCredit(@PathVariable long creditId){
         return ResponseEntity.ok(creditService.getCredit(creditId));
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<CreditEntity>> getAllById(@RequestBody List<Long> ids){
+        return ResponseEntity.ok(creditService.getCreditsByIds(ids));
     }
 
     @PostMapping("/save")

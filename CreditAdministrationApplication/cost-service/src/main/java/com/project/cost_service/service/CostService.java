@@ -22,7 +22,7 @@ public class CostService {
     }
 
     public CostEntity getByCreditId(Long creditId){
-        return costRepository.findByCreditId(creditId);
+        return costRepository.findByCostCreditId(creditId);
     }
 
     public double finalMonthlyAmount(double requestedAmount,double interest,int years){
@@ -40,16 +40,16 @@ public class CostService {
 
     public CostEntity saveCost(double requestedAmount,double interest,int years,Long creditId){
 
-        CostEntity temp = costRepository.findByCreditId(creditId);
+        CostEntity temp = costRepository.findByCostCreditId(creditId);
         if(temp != null){
 
             return null;
         }
 
         CostEntity cost = new CostEntity();
-        cost.setCreditId(creditId);
-        cost.setMonthlyAmount(finalMonthlyAmount(requestedAmount,interest,years));
-        cost.setFinalAmount(finalCreditAmount(cost.getMonthlyAmount(),years,requestedAmount));
+        cost.setCostCreditId(creditId);
+        cost.setCostMonthlyAmount(finalMonthlyAmount(requestedAmount,interest,years));
+        cost.setCostFinalAmount(finalCreditAmount(cost.getCostMonthlyAmount(),years,requestedAmount));
 
         return costRepository.save(cost);
     }

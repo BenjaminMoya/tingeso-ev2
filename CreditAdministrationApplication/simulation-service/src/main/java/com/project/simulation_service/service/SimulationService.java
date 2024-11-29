@@ -27,9 +27,9 @@ public class SimulationService {
     public SimulationEntity saveSimulation(double requestedAmount,double interest,int years,Long userId){
 
         SimulationEntity simulation = new SimulationEntity();
-        simulation.setUserId(userId);
-        simulation.setMonthlyAmount(creditAmountSimulation(requestedAmount,interest,years));
-        simulation.setFinalAmount(simulation.getMonthlyAmount()*12*years);
+        simulation.setSimulationUserId(userId);
+        simulation.setSimulationMonthlyAmount(creditAmountSimulation(requestedAmount,interest,years));
+        simulation.setSimulationFinalAmount(simulation.getSimulationMonthlyAmount()*12*years);
         return simulationRepository.save(simulation);
 
     }

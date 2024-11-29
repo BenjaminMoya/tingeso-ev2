@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CostRepository extends JpaRepository<CostEntity,Long> {
-    CostEntity findByCreditId(Long creditId);
+    CostEntity findByCostCreditId(Long creditId);
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CreditService {
@@ -18,10 +19,12 @@ public class CreditService {
         return creditRepository.findByCreditUserId(userId);
     }
 
-    public ArrayList<CreditEntity> getPhaseCredits(int creditPhase){ return creditRepository.findByCreditPhase(creditPhase); }
-
     public CreditEntity getCredit(long creditId){
         return creditRepository.findByCreditId(creditId);
+    }
+
+    public List<CreditEntity> getCreditsByIds(List<Long> creditIds) {
+        return creditRepository.findAllById(creditIds);
     }
 
     public CreditEntity saveCredit(CreditEntity credit){

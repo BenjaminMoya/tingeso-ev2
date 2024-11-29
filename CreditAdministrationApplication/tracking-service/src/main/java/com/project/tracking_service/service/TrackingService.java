@@ -1,7 +1,6 @@
 package com.project.tracking_service.service;
 
 import com.project.tracking_service.entity.TrackingEntity;
-import com.project.tracking_service.model.CreditEntity;
 import com.project.tracking_service.repository.TrackingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,15 +25,7 @@ public class TrackingService {
         return trackingRepository.findByTrackingCreditId(trackingCreditId);
     }
 
-    public TrackingEntity saveTracking(Long id){
-        CreditEntity credit = restTemplate.getForObject("http://credit-service/credit/"+id,CreditEntity.class);
-        TrackingEntity tracking = new TrackingEntity();
-        tracking.setTrackingCreditId(id);
-        tracking.setTrackingPhase(credit.getCreditPhase());
-        return trackingRepository.save(tracking);
-    }
-
-    public TrackingEntity updateTracking(TrackingEntity tracking){
+    public TrackingEntity saveTracking(TrackingEntity tracking){
         return trackingRepository.save(tracking);
     }
 }
