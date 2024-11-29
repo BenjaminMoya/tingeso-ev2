@@ -15,18 +15,11 @@ spring:
     gateway:
       globalcors:
         cors-configurations:
-          '[/**]': # Aplica a todas las rutas
-            allowedOrigins:
-              - "http://localhost:5173"  # Cambia por el dominio de tu frontend
-            allowedMethods:
-              - "GET"
-              - "POST"
-              - "PUT"
-              - "DELETE"
-            allowedHeaders:
-              - "*"  # Permitir todos los encabezados
-            allowCredentials: true  # Permitir cookies/sesiones
-
+          '[/**]':
+            allowedOrigins: "http://localhost:5173" 
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
       discovery:
         locator:
           enabled: true
