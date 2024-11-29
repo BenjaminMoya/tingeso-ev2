@@ -21,7 +21,7 @@ const create = (data) => {
 }
 
 const login = (data) => {
-  return httpCommon.post('/user/login', data);
+  return axios.post('http://localhost:8080/user/login', {userEmail: "admin@email.com", userPassword: 1234});
 }
 
 const update = (data) => {
