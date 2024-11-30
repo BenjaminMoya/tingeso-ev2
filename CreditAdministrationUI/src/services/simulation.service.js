@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const getAll = () => {
-  return axios.get('/evaluation/');
+const getSimulation = (amount,interest,years) => {
+  return axios.get(`/simulation/${amount}/${interest}/${years}`);
 }
 
-const saveEvaluation = (amount,interest,years,userId) => {
-    return axios.post(`/evaluation/save/${amount}/${interest}/${years}/${userId}`);
+const create = (amount,interest,years,userId) => {
+    return axios.post(`/simulation/save/${amount}/${interest}/${years}/${userId}`);
 }
 
-export default { saveEvaluation, getAll };
+export default { getSimulation, create };

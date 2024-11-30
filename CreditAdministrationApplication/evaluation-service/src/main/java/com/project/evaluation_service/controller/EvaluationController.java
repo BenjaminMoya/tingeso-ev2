@@ -1,7 +1,9 @@
 package com.project.evaluation_service.controller;
 
+import com.project.evaluation_service.entity.EvaluationEntity;
 import com.project.evaluation_service.service.EvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,6 +13,16 @@ public class EvaluationController {
 
     @Autowired
     EvaluationService evaluationService;
+
+    @PostMapping("/save")
+    public ResponseEntity<EvaluationEntity> saveEvaluation(EvaluationEntity evaluation){
+        return ResponseEntity.ok(evaluationService.saveEvaluation(evaluation));
+    }
+
+    @GetMapping("/getByCreditId/{id}")
+    public ResponseEntity<EvaluationEntity> getByCreditId(@PathVariable Long id){
+        return ResponseEntity.ok(evaluationService.getByCreditId(id));
+    }
 
     @GetMapping("/relationCI/{creditId}/{requestedAmount}/{interest}/{years}/{monthlyEntry}")
     public int relationCI(@PathVariable Long creditId,

@@ -23,7 +23,7 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/getByUserId/{id}")
+    @GetMapping("/getById/{id}")
     public ResponseEntity<UserEntity> getUserById(@PathVariable Long id) {
         UserEntity user = userService.getUserById(id);
         return ResponseEntity.ok(user);
@@ -53,18 +53,6 @@ public class UserController {
         return ResponseEntity.ok(userService.login(user.getUserEmail(),user.getUserPassword()));
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity user){
-        UserEntity userUpdated = userService.updateUser(user);
-        return ResponseEntity.ok(userUpdated);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Integer> deleteUser(@PathVariable Long id) throws Exception {
-        var isDeleted = userService.deleteUser(id);
-        return ResponseEntity.ok(isDeleted);
-    }
-
     @PostMapping("/setZero/{id}")
     public int zeroSaving(@PathVariable long id){
         return userService.zeroSaving(id);
@@ -75,5 +63,17 @@ public class UserController {
         long userId = Long.parseLong(body.get("userId").toString());
         long creditId = Long.parseLong(body.get("creditId").toString());
         return userService.transferAmount(userId,creditId);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity user){
+        UserEntity userUpdated = userService.updateUser(user);
+        return ResponseEntity.ok(userUpdated);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Integer> deleteUser(@PathVariable Long id) throws Exception {
+        var isDeleted = userService.deleteUser(id);
+        return ResponseEntity.ok(isDeleted);
     }
 }
