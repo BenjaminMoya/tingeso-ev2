@@ -11,9 +11,13 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import AppRegistrationSharpIcon from '@mui/icons-material/AppRegistrationSharp';
 import creditService from "../services/credit.service";
+import trackingService from "../services/tracking.service";
 
 
 const CreditsList = () => {
+  const [ids1, setids1] = useState([]);
+  const [ids2, setids2] = useState([]);
+  const [ids3, setids3] = useState([]);
   const [credit1, setCredit1] = useState([]);
   const [credit2, setCredit2] = useState([]);
   const [credit3, setCredit3] = useState([]);
@@ -21,40 +25,64 @@ const CreditsList = () => {
   const navigate = useNavigate();
 
   const init = () => {
-    creditService
-    .getPhase(3)
+    trackingService
+    .getCreditIdsByPhase(3)
     .then((response) => {
-      setCredit1(response.data);
+      setids1(response.data);
+      creditService
+      .getListByIds(ids1)
+      .then((response) => {
+        setCredit1(response.data);
+      })
+      .catch((error) => {
+        console.log(
+          "Se ha producido un error al intentar mostrar listado creditos por evaluar.",
+          error
+        );
+      });
     })
     .catch((error) => {
-      console.log(
-        "Se ha producido un error al intentar mostrar listado creditos por evaluar.",
-        error
-      );
+      console.log("Se ha producido un error al intentar mostrar listado creditos por evaluar.", error);
     });
     
-    creditService
-    .getPhase(5)
+    trackingService
+    .getCreditIdsByPhase(5)
     .then((response) => {
-      setCredit2(response.data);
+      setids2(response.data);
+      creditService
+      .getListByIds(ids2)
+      .then((response) => {
+        setCredit2(response.data);
+      })
+      .catch((error) => {
+        console.log(
+          "Se ha producido un error al intentar mostrar listado creditos por evaluar.",
+          error
+        );
+      });
     })
     .catch((error) => {
-      console.log(
-      "Se ha producido un error al intentar mostrar listado creditos por evaluar.",
-       error
-      );
+      console.log("Se ha producido un error al intentar mostrar listado creditos por evaluar.", error);
     });
 
-    creditService
-    .getPhase(9)
+    trackingService
+    .getCreditIdsByPhase(9)
     .then((response) => {
-      setCredit3(response.data);
+      setids3(response.data);
+      creditService
+      .getListByIds(ids3)
+      .then((response) => {
+        setCredit3(response.data);
+      })
+      .catch((error) => {
+        console.log(
+          "Se ha producido un error al intentar mostrar listado creditos por evaluar.",
+          error
+        );
+      });
     })
     .catch((error) => {
-      console.log(
-      "Se ha producido un error al intentar mostrar listado creditos por evaluar.",
-       error
-      );
+      console.log("Se ha producido un error al intentar mostrar listado creditos por evaluar.", error);
     });
   };
 

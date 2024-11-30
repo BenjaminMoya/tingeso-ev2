@@ -5,15 +5,15 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
-import creditService from "../services/credit.service";
+import simulationService from "../services/simulation.service";
 
 const CreditSimulation = () => {
+  const userId = JSON.parse(sessionStorage.getItem("userId"));
   const [amount, setAmount] = useState("");
   const [interest, setInterest] = useState("");
   const [year, setYear] = useState("");
   const [simulatedAmount, setSimulatedAmount] = useState("");
 
-  //const navigate = useNavigate();
 
   const calculateSimulation = (e) => {
     e.preventDefault();
@@ -34,8 +34,8 @@ const CreditSimulation = () => {
     }
 
     console.log("Solicitar calcular simulacion.", amount,"-",interest,"-",year);
-    creditService
-    .simulation(amount, interest, year)
+    simulationService
+    .create(amount, interest, year, userId)
     .then((response) => {
       console.log("Cuota mensual simulada: ", response.data);
       setSimulatedAmount(response.data);
@@ -108,7 +108,12 @@ const CreditSimulation = () => {
           </Button>
         </FormControl>
       </form>
-      <p> Cuota mensual simulada: $ {simulatedAmount} </p>
+      { simulatedAmount != null  && (
+        <p> Cuota mensual simulada: $ {simulatedAmount.simulationMonthlyAmount} </p>
+      )}
+      { simulatedAmount != null  && (
+        <p> Cuota final simulada: $ {simulatedAmount.simulationFinalAmount} </p>
+      )}
     </Box>
   );
 };

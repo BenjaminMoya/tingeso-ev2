@@ -20,7 +20,7 @@ const UserCredits = () => {
     const init = () => {
         console.log(userId);
         creditService
-        .getAll(userId)
+        .getByUserId(userId)
         .then((response) => {
             console.log("Mostrando listado de creditos del usuario.", response.data);
             setCredits(response.data);
