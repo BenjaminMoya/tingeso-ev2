@@ -16,16 +16,18 @@ public class SimulationController {
     @Autowired
     SimulationService simulationService;
 
-    @GetMapping("/")
-    public ResponseEntity<List<SimulationEntity>> getAll(){
-        return ResponseEntity.ok(simulationService.getSimulations());
+    @GetMapping("/{amount}/{interest}/{years}")
+    public double getSimulation(@PathVariable double amount,
+                                @PathVariable double interest,
+                                @PathVariable int years){
+        return simulationService.creditAmountSimulation(amount,interest,years);
     }
 
     @PostMapping("/save/{amount}/{interest}/{years}/{userId}")
     public ResponseEntity<SimulationEntity> saveSimulation(@PathVariable double amount,
-                                                                   @PathVariable double interest,
-                                                                   @PathVariable int years,
-                                                                   @PathVariable Long userId){
+                                                           @PathVariable double interest,
+                                                           @PathVariable int years,
+                                                           @PathVariable Long userId){
         return ResponseEntity.ok(simulationService.saveSimulation(amount,interest,years,userId));
     }
 }

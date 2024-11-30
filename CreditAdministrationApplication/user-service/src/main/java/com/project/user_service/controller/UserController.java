@@ -17,27 +17,27 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/get")
+    @GetMapping("/")
     public ResponseEntity<List<UserEntity>> listUsers(){
         List<UserEntity> users = userService.getUsers();
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/getById/{userId}")
-    public ResponseEntity<UserEntity> getUserById(@PathVariable Long userId) {
-        UserEntity user = userService.getUserById(userId);
+    @GetMapping("/getByUserId/{id}")
+    public ResponseEntity<UserEntity> getUserById(@PathVariable Long id) {
+        UserEntity user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/getByRut/{userRut}")
-    public ResponseEntity<UserEntity> getUserByRut(@PathVariable String userRut){
-        UserEntity user = userService.getUserByRut(userRut);
+    @GetMapping("/getByRut/{rut}")
+    public ResponseEntity<UserEntity> getUserByRut(@PathVariable String rut){
+        UserEntity user = userService.getUserByRut(rut);
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/getByEmail/{userEmail}")
-    public ResponseEntity<UserEntity> getUserByEmail(@PathVariable String userEmail){
-        UserEntity user = userService.getUserByEmail(userEmail);
+    @GetMapping("/getByEmail/{email}")
+    public ResponseEntity<UserEntity> getUserByEmail(@PathVariable String email){
+        UserEntity user = userService.getUserByEmail(email);
         return ResponseEntity.ok(user);
     }
 
@@ -53,15 +53,21 @@ public class UserController {
         return ResponseEntity.ok(userService.login(user.getUserEmail(),user.getUserPassword()));
     }
 
-    @PostMapping("/zero/{userId}")
-    public int zeroSaving(@PathVariable long userId){
-        return userService.zeroSaving(userId);
-    }
-
     @PutMapping("/update")
     public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity user){
         UserEntity userUpdated = userService.updateUser(user);
         return ResponseEntity.ok(userUpdated);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Integer> deleteUser(@PathVariable Long id) throws Exception {
+        var isDeleted = userService.deleteUser(id);
+        return ResponseEntity.ok(isDeleted);
+    }
+
+    @PostMapping("/setZero/{id}")
+    public int zeroSaving(@PathVariable long id){
+        return userService.zeroSaving(id);
     }
 
     @PostMapping("/transfer")
@@ -69,11 +75,5 @@ public class UserController {
         long userId = Long.parseLong(body.get("userId").toString());
         long creditId = Long.parseLong(body.get("creditId").toString());
         return userService.transferAmount(userId,creditId);
-    }
-
-    @DeleteMapping("/delete/{userId}")
-    public ResponseEntity<Integer> deleteUserById(@PathVariable Long userId) throws Exception {
-        var isDeleted = userService.deleteUser(userId);
-        return ResponseEntity.ok(isDeleted);
     }
 }

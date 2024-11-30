@@ -17,10 +17,6 @@ public class CostService {
     @Autowired
     RestTemplate restTemplate;
 
-    public List<CostEntity> getCosts(){
-        return costRepository.findAll();
-    }
-
     public CostEntity getByCreditId(Long creditId){
         return costRepository.findByCostCreditId(creditId);
     }
@@ -52,5 +48,14 @@ public class CostService {
         cost.setCostFinalAmount(finalCreditAmount(cost.getCostMonthlyAmount(),years,requestedAmount));
 
         return costRepository.save(cost);
+    }
+
+    public int deleteCost(Long costId) throws Exception {
+        try{
+            costRepository.deleteById(costId);
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }

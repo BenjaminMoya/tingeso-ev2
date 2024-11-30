@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,17 +16,17 @@ public class CreditController {
     @Autowired
     CreditService creditService;
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<ArrayList<CreditEntity>> getUserCredits(@PathVariable long userId){
-        return ResponseEntity.ok(creditService.getUserCredits(userId));
+    @GetMapping("/getByUserId/{id}")
+    public ResponseEntity<List<CreditEntity>> getUserCredits(@PathVariable Long id){
+        return ResponseEntity.ok(creditService.getUserCredits(id));
     }
 
-    @GetMapping("/get/{creditId}")
-    public ResponseEntity<CreditEntity> getCredit(@PathVariable long creditId){
-        return ResponseEntity.ok(creditService.getCredit(creditId));
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<CreditEntity> getCredit(@PathVariable Long id){
+        return ResponseEntity.ok(creditService.getCredit(id));
     }
 
-    @GetMapping("/list")
+    @GetMapping("/listByIds")
     public ResponseEntity<List<CreditEntity>> getAllById(@RequestBody List<Long> ids){
         return ResponseEntity.ok(creditService.getCreditsByIds(ids));
     }
@@ -47,10 +46,10 @@ public class CreditController {
         return ResponseEntity.ok(newCredit);
     }
 
-    @DeleteMapping("/delete/{creditId}")
-    public int deleteCredit(@PathVariable long creditId){
+    @DeleteMapping("/delete/{id}")
+    public int deleteCredit(@PathVariable Long id){
         try {
-            return creditService.deleteCredit(creditId);
+            return creditService.deleteCredit(id);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

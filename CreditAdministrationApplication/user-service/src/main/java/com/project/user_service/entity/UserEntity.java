@@ -27,5 +27,5 @@ public class UserEntity {
     private int userSavingCapacity;
     private double userBalance;
     private boolean userIndependent;
-    private boolean executive;
+    private boolean userExecutive;
 }

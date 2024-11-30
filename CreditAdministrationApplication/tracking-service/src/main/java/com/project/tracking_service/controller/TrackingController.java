@@ -16,6 +16,16 @@ public class TrackingController {
     @Autowired
     TrackingService trackingService;
 
+    @GetMapping("/getByTrackingCreditId/{id}")
+    public ResponseEntity<TrackingEntity> getByTrackingCreditId(@PathVariable Long id){
+        return  ResponseEntity.ok(trackingService.getByTrackingCreditId(id));
+    }
+
+    @GetMapping("/getTrackingCreditIds/{phase}")
+    public ResponseEntity<List<Long>> getTrackingCreditIds(@PathVariable int phase){
+        return ResponseEntity.ok(trackingService.getTrackingCreditIds(phase));
+    }
+
     @PostMapping("/save")
     public ResponseEntity<TrackingEntity> saveTracking(@RequestBody TrackingEntity tracking){
         return ResponseEntity.ok(trackingService.saveTracking(tracking));
@@ -26,13 +36,13 @@ public class TrackingController {
         return ResponseEntity.ok(trackingService.saveTracking(tracking));
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<TrackingEntity>> getAll(){
-        return ResponseEntity.ok(trackingService.getTrackings());
-    }
-
-    @GetMapping("/getByTrackingCreditId/{id}")
-    public ResponseEntity<TrackingEntity> getByTrackingCreditId(@PathVariable Long id){
-        return  ResponseEntity.ok(trackingService.getByTrackingCreditId(id));
+    @DeleteMapping("/delete/{id}")
+    public int deleteTracking(@PathVariable Long id){
+        try{
+            trackingService.deleteTracking(id);
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }

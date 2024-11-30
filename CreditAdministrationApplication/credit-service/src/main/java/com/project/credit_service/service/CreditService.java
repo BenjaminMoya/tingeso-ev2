@@ -15,11 +15,11 @@ public class CreditService {
     @Autowired
     CreditRepository creditRepository;
 
-    public ArrayList<CreditEntity> getUserCredits(long userId){
+    public List<CreditEntity> getUserCredits(Long userId){
         return creditRepository.findByCreditUserId(userId);
     }
 
-    public CreditEntity getCredit(long creditId){
+    public CreditEntity getCredit(Long creditId){
         return creditRepository.findByCreditId(creditId);
     }
 
@@ -35,7 +35,7 @@ public class CreditService {
         return creditRepository.save(credit);
     }
 
-    public int deleteCredit(long creditId) throws Exception {
+    public int deleteCredit(Long creditId) throws Exception {
         try{
             creditRepository.deleteById(creditId);
             return 1;

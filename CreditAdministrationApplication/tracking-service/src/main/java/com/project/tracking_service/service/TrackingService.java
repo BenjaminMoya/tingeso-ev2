@@ -14,18 +14,24 @@ public class TrackingService {
     @Autowired
     TrackingRepository trackingRepository;
 
-    @Autowired
-    RestTemplate restTemplate;
-
-    public List<TrackingEntity> getTrackings(){
-        return trackingRepository.findAll();
-    }
-
     public TrackingEntity getByTrackingCreditId(Long trackingCreditId){
         return trackingRepository.findByTrackingCreditId(trackingCreditId);
     }
 
     public TrackingEntity saveTracking(TrackingEntity tracking){
         return trackingRepository.save(tracking);
+    }
+
+    public List<Long> getTrackingCreditIds(int trackingPhase){
+        return trackingRepository.findTrackingCreditIdByTrackingPhase(trackingPhase);
+    }
+
+    public int deleteTracking(Long trackingId){
+        try{
+            trackingRepository.deleteById(trackingId);
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }

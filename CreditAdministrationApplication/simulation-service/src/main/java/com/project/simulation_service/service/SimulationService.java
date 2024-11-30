@@ -13,10 +13,6 @@ public class SimulationService {
     @Autowired
     SimulationRepository simulationRepository;
 
-    public List<SimulationEntity> getSimulations(){
-        return simulationRepository.findAll();
-    }
-
     public double creditAmountSimulation(double requestedAmount,double interest,int years){
 
         double convertedInterest = (interest/12)/100;

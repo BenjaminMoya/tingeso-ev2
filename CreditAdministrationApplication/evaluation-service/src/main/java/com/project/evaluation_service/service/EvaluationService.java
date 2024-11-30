@@ -1,6 +1,7 @@
 package com.project.evaluation_service.service;
 
 import com.project.evaluation_service.entity.EvaluationEntity;
+import com.project.evaluation_service.model.SimulationEntity;
 import com.project.evaluation_service.model.UserEntity;
 import com.project.evaluation_service.repository.EvaluationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
