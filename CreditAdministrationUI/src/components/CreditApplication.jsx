@@ -104,7 +104,7 @@ const CreditApplication = () => {
     } else if(creditType == 3 && selectedFile1 && selectedFile2 && selectedFile3 && selectedFile4){
       const fileType4 = selectedFile4.type;
       if (fileType4 !== "application/pdf") {
-        alert("Por favor, sube un archivo en formato PDF.");
+        alert("Por favor, sube un archivo en formato PDF");
         return;
       }
       setMaxAmount(creditRequestedAmount*0,6);
