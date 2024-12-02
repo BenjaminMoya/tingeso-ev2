@@ -33,7 +33,7 @@ public class EvaluationController {
         return evaluationService.relationCI(creditId,requestedAmount,interest,years,monthlyEntry);
     }
 
-    @GetMapping("/relationDI/{creditId}{monthlyAmount}/{debtsMonthlyAmount}/{creditMonthlyAmount}")
+    @GetMapping("/relationDI/{creditId}/{monthlyAmount}/{debtsMonthlyAmount}/{creditMonthlyAmount}")
     public int relationDI(@PathVariable Long creditId,
                           @PathVariable double monthlyAmount,
                           @PathVariable double debtsMonthlyAmount,

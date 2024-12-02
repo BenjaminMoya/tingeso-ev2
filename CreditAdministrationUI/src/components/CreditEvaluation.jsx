@@ -20,8 +20,10 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox"
-import savingCapacityService from "../services/savingCapacity.service";
+import evaluationService from "../services/evaluation.service";
 import fileService from "../services/file.service";
+import simulationService from "../services/simulation.service";
+import costService from "../services/cost.service";
 
 const CreditEvaluation = () => {
 
@@ -47,7 +49,6 @@ const CreditEvaluation = () => {
   const [workSeniority,setWorkSeniority] = useState("");
   const [indepedent,setIndependent] = useState("");
   const [selectedFile1, setSelectedFile1] = useState(null);
-  const [selectedFile2, setSelectedFile2] = useState(null);
   const [cooldown, setCooldown] = useState(false);
   const today = new Date();
   const firmDate = new Date(creditFirmDate);
@@ -66,7 +67,7 @@ const CreditEvaluation = () => {
       console.log("Mostrando datos del usuario.", response.data);
       setCreditReason(creditInit.creditReason);
       setAge(response.data.userAge);
-      setExecutive(response.data.executive);
+      setExecutive(response.data.userExecutive);
       setWorkSeniority(response.data.userWorkSeniority);
       setIndependent(response.data.userIndependent);
     })
@@ -249,8 +250,8 @@ const CreditEvaluation = () => {
       return alert("El interes debe estar entre 4.5% y 6%");
     }
 
-    creditService
-    .relation1(creditRequestedAmount,interest,creditTerm,monthlyEntry)
+    evaluationService
+    .relationCi(creditId,creditRequestedAmount,interest,creditTerm,monthlyEntry)
     .then((response) => {
       console.log("Relacion CI: ", response.data);
       setRelationCI(response.data);
@@ -273,12 +274,12 @@ const CreditEvaluation = () => {
       return alert("La cuota mensual y las deudas mensuales deben ser un numero entero positivo");
     }
 
-    creditService
-    .simulation(creditRequestedAmount,interest,creditTerm)
+    simulationService
+    .getSimulation(creditRequestedAmount,interest,creditTerm)
     .then((response) => {
       console.log("Cuota mensual simulada: ", response.data);
-      creditService
-      .relation2(monthlyEntry,allDebts,response.data)
+      evaluationService
+      .relationDi(creditId,monthlyEntry,allDebts,response.data)
       .then((response) => {
         console.log("Relacion DI: ", response.data);
         setRelationDI(response.data);
@@ -323,23 +324,23 @@ const CreditEvaluation = () => {
     .zero(creditUserId)
     .then((response) => {
       console.log("Reinicio de condicion de ahorro: ", response.data);
-      savingCapacityService
+      evaluationService
       .min(creditUserId,creditRequestedAmount)
       .then((response) => {
         console.log("Condicion de saldo minimo: ", response.data);
-        savingCapacityService
+        evaluationService
         .history(creditUserId,options.greatRetirement)
         .then((response) => {
           console.log("Condicion de retiros significativos: ", response.data);
-          savingCapacityService
+          evaluationService
           .periodic(creditUserId,monthlyDeposit,monthlyEntry,options.periodicDeposits)
           .then((response) => {
             console.log("Condicion de depositos periodicos: ", response.data);
-            savingCapacityService
+            evaluationService
             .relation(creditUserId,creditRequestedAmount)
             .then((response) => {
               console.log("Condicion de relacion saldo/antiguedad: ", response.data);
-              savingCapacityService
+              evaluationService
               .out(creditUserId,topRetirement)
               .then((response) => {
                 console.log("Condicion de retiros maximos: ", response.data);
@@ -405,11 +406,11 @@ const CreditEvaluation = () => {
       alert("Debe completar todas las evaluaciones");
     }
 
-    creditService
-    .monthly(creditRequestedAmount,interest,creditTerm)
+    costService
+    .create(creditRequestedAmount,interest,creditTerm,creditId)
     .then((response) => {
       console.log("Cuota mensual: ", response.data);
-      const credit = { creditId, creditUserId, creditPropertyAmount:creditInit.creditPropertyAmount, creditRequestedAmount, creditProposedAmount:response.data, creditPhase:4 ,creditTerm, creditFirmDate, creditType, creditReason};
+      const credit = { creditId, creditUserId, creditPropertyAmount:creditInit.creditPropertyAmount, creditRequestedAmount, creditProposedAmount:response.data.costMonthlyAmount, creditPhase:4 ,creditTerm, creditFirmDate, creditType, creditReason};
       creditService
       .update(credit)
       .then((response) => {

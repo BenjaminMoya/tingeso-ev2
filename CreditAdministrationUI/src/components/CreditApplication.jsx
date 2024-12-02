@@ -7,6 +7,9 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import AccountBalance from '@mui/icons-material/AccountBalance';
 import creditService from "../services/credit.service";
+import evaluationService from "../services/evaluation.service";
+import trackingService from "../services/tracking.service";
+import costService from "../services/cost.service";
 import fileService from "../services/file.service";
 
 const CreditApplication = () => {
@@ -121,6 +124,23 @@ const CreditApplication = () => {
       .then((response) => {
         console.log("El credito ha sido solicitado.", response.data);
         const creditId = response.data.creditId;
+        const tracking = { trackingCreditId: creditId, trackingPhase: 3};
+        trackingService
+        .create(tracking)
+        .then((response) => {
+          console.log("El seguimiento ha sido creado.", response.data);
+        })
+        .catch((error) => {
+          console.log("Ha ocurrido un error al crear el seguimiento.", error);
+        });
+        evaluationService
+        .create(creditId)
+        .then((response) => {
+          console.log("La evaluacion ha sido creada.", response.data);
+        })
+        .catch((error) => {
+          console.log("Ha ocurrido un error al crear la evaluacion.", error);
+        });
         if(creditType == 1){
           fileService
           .upload(creditId,1,selectedFile1)
