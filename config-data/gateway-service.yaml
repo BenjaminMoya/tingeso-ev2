@@ -33,7 +33,7 @@ spring:
         - id: user-service
           uri: lb://user-service
           predicates:
-            - Path=/user/**
+            - Path=/user/transfer/**,/user/transfer/**
         - id: credit-service
           uri: lb://credit-service
           predicates:

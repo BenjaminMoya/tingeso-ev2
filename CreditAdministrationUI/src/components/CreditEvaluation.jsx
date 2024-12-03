@@ -264,18 +264,29 @@ const CreditEvaluation = () => {
       return alert("El interes debe estar entre 4.5% y 6%");
     }
 
-    evaluationService
-    .relationCi(creditId,creditRequestedAmount,interest,creditTerm,monthlyEntry)
+    simulationService
+    .getSimulation(creditRequestedAmount,interest,creditTerm)
     .then((response) => {
-      console.log("Relacion CI: ", response.data);
-      setRelationCI(response.data);
+      console.log("Cuota mensual simulada: ", response.data);
+      evaluationService
+      .relationCi(creditId,response.data,monthlyEntry)
+      .then((response) => {
+        console.log("Relacion CI: ", response.data);
+        setRelationCI(response.data);
+      })
+      .catch((error) => {
+        console.log(
+          "Ha ocurrido un error al intentar obtener la relacion CI.",
+          error
+        );
+      });
     })
     .catch((error) => {
       console.log(
-        "Ha ocurrido un error al intentar obtener la relacion CI.",
+        "Ha ocurrido un error al intentar obtener la cuota mensual.",
         error
       );
-    });
+    })
   };
 
   const ev4 = () => {

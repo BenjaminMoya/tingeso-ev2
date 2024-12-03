@@ -24,13 +24,11 @@ public class EvaluationController {
         return ResponseEntity.ok(evaluationService.getByCreditId(id));
     }
 
-    @GetMapping("/relationCI/{creditId}/{requestedAmount}/{interest}/{years}/{monthlyEntry}")
+    @GetMapping("/relationCI/{creditId}/{monthlyAmount}//{monthlyEntry}")
     public int relationCI(@PathVariable Long creditId,
-                          @PathVariable double requestedAmount,
-                          @PathVariable double interest,
-                          @PathVariable int years,
+                          @PathVariable double monthlyAmount,
                           @PathVariable double monthlyEntry){
-        return evaluationService.relationCI(creditId,requestedAmount,interest,years,monthlyEntry);
+        return evaluationService.relationCI(creditId,monthlyAmount,monthlyEntry);
     }
 
     @GetMapping("/relationDI/{creditId}/{monthlyAmount}/{debtsMonthlyAmount}/{creditMonthlyAmount}")
