@@ -24,7 +24,6 @@ public class UserEntity {
     private int userAge;
     private int userAccountSeniority;
     private int userWorkSeniority;
-    private int userSavingCapacity;
     private double userBalance;
     private boolean userIndependent;
     private boolean userExecutive;

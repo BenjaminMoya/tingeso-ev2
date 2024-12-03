@@ -71,17 +71,6 @@ public class UserService {
         }
     }
 
-    public int zeroSaving(Long userId){
-        UserEntity userTemp = userRepository.findByUserId(userId);
-        userTemp.setUserSavingCapacity(0);
-        try{
-            updateUser(userTemp);
-            return 1;
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
     public double transferAmount(Long userId,Long creditId){
         UserEntity userTemp = userRepository.findByUserId(userId);
         CreditEntity creditTemp = restTemplate.getForObject("http://credit-service/credit/getById/"+creditId,CreditEntity.class);

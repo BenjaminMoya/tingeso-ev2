@@ -264,29 +264,18 @@ const CreditEvaluation = () => {
       return alert("El interes debe estar entre 4.5% y 6%");
     }
 
-    simulationService
-    .getSimulation(creditRequestedAmount,interest,creditTerm)
+    evaluationService
+    .relationCi(creditId,creditRequestedAmount,interest,creditTerm,monthlyEntry)
     .then((response) => {
-      console.log("Cuota mensual simulada: ", response.data);
-      evaluationService
-      .relationCi(creditId,response.data,monthlyEntry)
-      .then((response) => {
-        console.log("Relacion CI: ", response.data);
-        setRelationCI(response.data);
-      })
-      .catch((error) => {
-        console.log(
-          "Ha ocurrido un error al intentar obtener la relacion CI.",
-          error
-        );
-      });
+      console.log("Relacion CI: ", response.data);
+      setRelationCI(response.data);
     })
     .catch((error) => {
       console.log(
-        "Ha ocurrido un error al intentar obtener la cuota mensual.",
+        "Ha ocurrido un error al intentar obtener la relacion CI.",
         error
       );
-    })
+    });
   };
 
   const ev4 = () => {
@@ -345,35 +334,35 @@ const CreditEvaluation = () => {
       return alert("El deposito mensual y el retiro maximo deben ser un numero entero positivo");
     }
     
-    userService
-    .zero(creditUserId)
+    evaluationService
+    .zero(creditId)
     .then((response) => {
       console.log("Reinicio de condicion de ahorro: ", response.data);
       evaluationService
-      .min(creditUserId,creditRequestedAmount)
+      .min(creditUserId,creditId,creditRequestedAmount)
       .then((response) => {
         console.log("Condicion de saldo minimo: ", response.data);
         evaluationService
-        .history(creditUserId,options.greatRetirement)
+        .history(creditId,options.greatRetirement)
         .then((response) => {
           console.log("Condicion de retiros significativos: ", response.data);
           evaluationService
-          .periodic(creditUserId,monthlyDeposit,monthlyEntry,options.periodicDeposits)
+          .periodic(creditId,monthlyDeposit,monthlyEntry,options.periodicDeposits)
           .then((response) => {
             console.log("Condicion de depositos periodicos: ", response.data);
             evaluationService
-            .relation(creditUserId,creditRequestedAmount)
+            .relation(creditUserId,creditId,creditRequestedAmount)
             .then((response) => {
               console.log("Condicion de relacion saldo/antiguedad: ", response.data);
               evaluationService
-              .out(creditUserId,topRetirement)
+              .out(creditUserId,creditId,topRetirement)
               .then((response) => {
                 console.log("Condicion de retiros maximos: ", response.data);
-                userService
-                .getById(creditUserId)
+                evaluationService
+                .getByCreditId (creditId)
                 .then((response) => {
                   console.log("Mostrando datos del usuario.", response.data);
-                  setSavingCapacity(response.data.userSavingCapacity);
+                  setSavingCapacity(response.data.evaluationUserSavingCapacity);
                 })
                 .catch((error) => {
                   console.log(

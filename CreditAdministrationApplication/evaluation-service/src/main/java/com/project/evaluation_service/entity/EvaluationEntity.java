@@ -21,4 +21,5 @@ public class EvaluationEntity {
     private Long evaluationCreditId;
     private int evaluationRelationCi;
     private int evaluationRelationDi;
+    private int evaluationUserSavingCapacity;
 }

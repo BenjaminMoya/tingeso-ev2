@@ -27,9 +27,17 @@ public class EvaluationService {
         return evaluationRepository.findByEvaluationCreditId(creditId);
     }
 
-    public int relationCI(Long creditId,double monthlyAmount,double monthlyEntry){
+    public int setZero(Long creditId){
         EvaluationEntity temp = getByCreditId(creditId);
-        if(monthlyAmount/monthlyEntry > 0.35){
+        temp.setEvaluationUserSavingCapacity(0);
+        saveEvaluation(temp);
+        return 1;
+    }
+
+    public int relationCI(Long creditId,double requestedAmount,double interest,int years,double monthlyEntry){
+        EvaluationEntity temp = getByCreditId(creditId);
+        double percentage = restTemplate.getForObject("http://simulation-service/simulation/"+requestedAmount+"/"+interest+"/"+years,Double.class);
+        if(percentage/monthlyEntry > 0.35){
             temp.setEvaluationRelationCi(0);
             saveEvaluation(temp);
             return 0;
@@ -53,38 +61,29 @@ public class EvaluationService {
         }
     }
 
-    public int minAmount(long userId,double creditAmount){
-        UserEntity user = restTemplate.getForObject("http://user-service/user/get/"+userId,UserEntity.class);
+    public int minAmount(Long userId,Long creditId,double creditAmount){
+        UserEntity user = restTemplate.getForObject("http://user-service/user/getById/"+userId,UserEntity.class);
+        EvaluationEntity temp = getByCreditId(creditId);
         if(creditAmount*0.1 < user.getUserBalance()){
-            user.setUserSavingCapacity(user.getUserSavingCapacity()+1);
-            restTemplate.exchange(
-                    "http://user-service/user/update",
-                    HttpMethod.PUT,
-                    new HttpEntity<>(user),
-                    UserEntity.class
-            ).getBody();
+            temp.setEvaluationUserSavingCapacity(temp.getEvaluationUserSavingCapacity()+1);
+            evaluationRepository.save(temp);
             return 1;
         } else {
             return 0;
         }
     }
 
-    public int savingHistory(long userId,boolean greatRetirement){
+    public int savingHistory(Long creditId,boolean greatRetirement){
         if(greatRetirement){
             return 0;
         }
-        UserEntity user = restTemplate.getForObject("http://user-service/user/get/"+userId,UserEntity.class);
-        user.setUserSavingCapacity(user.getUserSavingCapacity()+1);
-        restTemplate.exchange(
-                "http://user-service/user/update",
-                HttpMethod.PUT,
-                new HttpEntity<>(user),
-                UserEntity.class
-        ).getBody();
+        EvaluationEntity temp = getByCreditId(creditId);
+        temp.setEvaluationUserSavingCapacity(temp.getEvaluationUserSavingCapacity()+1);
+        evaluationRepository.save(temp);
         return 1;
     }
 
-    public int periodicDeposit(long userId, double monthlyDeposit, double monthlyEntry, boolean isPeriodic){
+    public int periodicDeposit(Long creditId,double monthlyDeposit, double monthlyEntry, boolean isPeriodic){
 
         if(!isPeriodic) {
             return 0;
@@ -94,58 +93,40 @@ public class EvaluationService {
             return 0;
         }
 
-        UserEntity user = restTemplate.getForObject("http://user-service/user/get/"+userId,UserEntity.class);
-        user.setUserSavingCapacity(user.getUserSavingCapacity()+1);
-        restTemplate.exchange(
-                "http://user-service/user/update",
-                HttpMethod.PUT,
-                new HttpEntity<>(user),
-                UserEntity.class
-        ).getBody();
+        EvaluationEntity temp = getByCreditId(creditId);
+        temp.setEvaluationUserSavingCapacity(temp.getEvaluationUserSavingCapacity()+1);
+        evaluationRepository.save(temp);
         return 1;
     }
 
-    public int relationSA(long userId, double creditAmount){
-        UserEntity user = restTemplate.getForObject("http://user-service/user/get/"+userId,UserEntity.class);
+    public int relationSA(Long userId, Long creditId, double creditAmount){
+        UserEntity user = restTemplate.getForObject("http://user-service/user/getById/"+userId,UserEntity.class);
+        EvaluationEntity temp = getByCreditId(creditId);
 
         if(user.getUserAccountSeniority() < 2 && user.getUserBalance() >= creditAmount*0.2){
-            user.setUserSavingCapacity(user.getUserSavingCapacity()+1);
-            restTemplate.exchange(
-                    "http://user-service/user/update",
-                    HttpMethod.PUT,
-                    new HttpEntity<>(user),
-                    UserEntity.class
-            ).getBody();
+            temp.setEvaluationUserSavingCapacity(temp.getEvaluationUserSavingCapacity()+1);
+            evaluationRepository.save(temp);
             return 1;
         }
 
         if(user.getUserAccountSeniority() >= 2 && user.getUserBalance() >= creditAmount*0.1){
-            user.setUserSavingCapacity(user.getUserSavingCapacity()+1);
-            restTemplate.exchange(
-                    "http://user-service/user/update",
-                    HttpMethod.PUT,
-                    new HttpEntity<>(user),
-                    UserEntity.class
-            ).getBody();
+            temp.setEvaluationUserSavingCapacity(temp.getEvaluationUserSavingCapacity()+1);
+            evaluationRepository.save(temp);
             return 1;
         }
 
         return 0;
     }
 
-    public int recentOut(long userId, double maxRetirement){
+    public int recentOut(Long userId, Long creditId, double maxRetirement){
 
-        UserEntity user = restTemplate.getForObject("http://user-service/user/get/"+userId,UserEntity.class);
+        UserEntity user = restTemplate.getForObject("http://user-service/user/getById/"+userId,UserEntity.class);
+        EvaluationEntity temp = getByCreditId(creditId);
         if(user.getUserBalance()*0.3 < maxRetirement){
             return 0;
         }
-        user.setUserSavingCapacity(user.getUserSavingCapacity()+1);
-        restTemplate.exchange(
-                "http://user-service/user/update",
-                HttpMethod.PUT,
-                new HttpEntity<>(user),
-                UserEntity.class
-        ).getBody();
+        temp.setEvaluationUserSavingCapacity(temp.getEvaluationUserSavingCapacity()+1);
+        evaluationRepository.save(temp);
         return 1;
     }
 }

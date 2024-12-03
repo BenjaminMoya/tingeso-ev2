@@ -54,7 +54,7 @@ spring:
           uri: lb://tracking-service
           predicates:
             - Path=/tracking/**
-        - id: costs-service
-          uri: lb://costs-service
+        - id: cost-service
+          uri: lb://cost-service
           predicates:
             - Path=/cost/**

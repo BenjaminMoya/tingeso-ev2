@@ -24,10 +24,6 @@ const login = (data) => {
   return axios.post('/user/login', data);
 }
 
-const zero = (id) => {
-  return axios.post(`/user/setZero/${id}`);
-}
-
 const transfer = (userId,creditId) => {
   return axios.post("/user/transfer",{userId, creditId});
 }
@@ -40,4 +36,4 @@ const remove = (id) => {
   return axios.delete(`/user/delete/${id}`);
 }
 
-export default { getAll, getById, getByRut, getByEmail, create, login, update, remove, zero, transfer };
+export default { getAll, getById, getByRut, getByEmail, create, login, update, remove, transfer };

@@ -53,11 +53,6 @@ public class UserController {
         return ResponseEntity.ok(userService.login(user.getUserEmail(),user.getUserPassword()));
     }
 
-    @PostMapping("/setZero/{id}")
-    public int zeroSaving(@PathVariable long id){
-        return userService.zeroSaving(id);
-    }
-
     @PostMapping("/transfer")
     public double transferAmount(@RequestBody Map<String, Object> body){
         long userId = Long.parseLong(body.get("userId").toString());

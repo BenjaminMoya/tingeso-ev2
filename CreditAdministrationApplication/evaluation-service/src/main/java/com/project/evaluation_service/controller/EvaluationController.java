@@ -19,16 +19,23 @@ public class EvaluationController {
         return ResponseEntity.ok(evaluationService.saveEvaluation(evaluation));
     }
 
+    @PostMapping("/setZero/{id}")
+    public int setZero(@PathVariable Long id){
+        return evaluationService.setZero(id);
+    }
+
     @GetMapping("/getByCreditId/{id}")
     public ResponseEntity<EvaluationEntity> getByCreditId(@PathVariable Long id){
         return ResponseEntity.ok(evaluationService.getByCreditId(id));
     }
 
-    @GetMapping("/relationCI/{creditId}/{monthlyAmount}//{monthlyEntry}")
+    @GetMapping("/relationCI/{creditId}/{requestedAmount}/{interest}/{years}/{monthlyEntry}")
     public int relationCI(@PathVariable Long creditId,
-                          @PathVariable double monthlyAmount,
+                          @PathVariable double requestedAmount,
+                          @PathVariable double interest,
+                          @PathVariable int years,
                           @PathVariable double monthlyEntry){
-        return evaluationService.relationCI(creditId,monthlyAmount,monthlyEntry);
+        return evaluationService.relationCI(creditId,requestedAmount,interest,years,monthlyEntry);
     }
 
     @GetMapping("/relationDI/{creditId}/{monthlyAmount}/{debtsMonthlyAmount}/{creditMonthlyAmount}")
@@ -39,35 +46,38 @@ public class EvaluationController {
         return evaluationService.relationDI(creditId,monthlyAmount,debtsMonthlyAmount,creditMonthlyAmount);
     }
 
-    @PostMapping("/min/{userId}/{creditAmount}")
+    @PostMapping("/min/{userId}/{creditId}/{creditAmount}")
     public int minAmount(@PathVariable long userId,
+                         @PathVariable long creditId,
                          @PathVariable double creditAmount){
-        return evaluationService.minAmount(userId,creditAmount);
+        return evaluationService.minAmount(userId,creditId,creditAmount);
     }
 
-    @PostMapping("/history/{userId}/{greatRetirement}")
-    public int savingHistory(@PathVariable long userId,
+    @PostMapping("/history/{creditId}/{greatRetirement}")
+    public int savingHistory(@PathVariable long creditId,
                              @PathVariable boolean greatRetirement){
-        return evaluationService.savingHistory(userId,greatRetirement);
+        return evaluationService.savingHistory(creditId,greatRetirement);
     }
 
-    @PostMapping("/periodic/{userId}/{monthlyDeposit}/{monthlyEntry}/{isPeriodic}")
-    public int periodicDeposit(@PathVariable long userId,
+    @PostMapping("/periodic/{creditId}/{monthlyDeposit}/{monthlyEntry}/{isPeriodic}")
+    public int periodicDeposit(@PathVariable long creditId,
                                @PathVariable double monthlyDeposit,
                                @PathVariable double monthlyEntry,
                                @PathVariable boolean isPeriodic){
-        return evaluationService.periodicDeposit(userId,monthlyDeposit,monthlyEntry,isPeriodic);
+        return evaluationService.periodicDeposit(creditId,monthlyDeposit,monthlyEntry,isPeriodic);
     }
 
-    @PostMapping("/relation/{userId}/{creditAmount}")
+    @PostMapping("/relation/{userId}/{creditId}/{creditAmount}")
     public int relationSA(@PathVariable long userId,
+                          @PathVariable long creditId,
                           @PathVariable double creditAmount){
-        return evaluationService.relationSA(userId,creditAmount);
+        return evaluationService.relationSA(userId,creditId,creditAmount);
     }
 
-    @PostMapping("/out/{userId}/{maxRetirement}")
+    @PostMapping("/out/{userId}/{creditId}/{maxRetirement}")
     public int recentOut(@PathVariable long userId,
+                         @PathVariable long creditId,
                          @PathVariable double maxRetirement){
-        return evaluationService.recentOut(userId, maxRetirement);
+        return evaluationService.recentOut(userId,creditId, maxRetirement);
     }
 }
