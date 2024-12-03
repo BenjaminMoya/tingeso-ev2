@@ -24,6 +24,9 @@ public class CreditService {
     }
 
     public List<CreditEntity> getCreditsByIds(List<Long> creditIds) {
+        if(creditIds.isEmpty()){
+            return List.of();
+        }
         return creditRepository.findAllById(creditIds);
     }
 

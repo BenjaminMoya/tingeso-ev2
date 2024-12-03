@@ -15,9 +15,6 @@ import trackingService from "../services/tracking.service";
 
 
 const CreditsList = () => {
-  const [ids1, setids1] = useState([]);
-  const [ids2, setids2] = useState([]);
-  const [ids3, setids3] = useState([]);
   const [credit1, setCredit1] = useState([]);
   const [credit2, setCredit2] = useState([]);
   const [credit3, setCredit3] = useState([]);
@@ -28,9 +25,8 @@ const CreditsList = () => {
     trackingService
     .getCreditIdsByPhase(3)
     .then((response) => {
-      setids1(response.data);
       creditService
-      .getListByIds(ids1)
+      .getListByIds(response.data)
       .then((response) => {
         setCredit1(response.data);
       })
@@ -48,9 +44,8 @@ const CreditsList = () => {
     trackingService
     .getCreditIdsByPhase(5)
     .then((response) => {
-      setids2(response.data);
       creditService
-      .getListByIds(ids2)
+      .getListByIds(response.data)
       .then((response) => {
         setCredit2(response.data);
       })
@@ -68,9 +63,8 @@ const CreditsList = () => {
     trackingService
     .getCreditIdsByPhase(9)
     .then((response) => {
-      setids3(response.data);
       creditService
-      .getListByIds(ids3)
+      .getListByIds(response.data)
       .then((response) => {
         setCredit3(response.data);
       })

@@ -1,10 +1,10 @@
-import httpCommon from "../http-common";
+import axios from "axios";
 
 const upload = (id, type, file) => {
     const formData = new FormData();
     formData.append("file", file); 
   
-    return httpCommon.post(`/api/file/upload/${id}/${type}`, formData, {
+    return axios.post(`/file/upload/${id}/${type}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data', 
       },
@@ -13,7 +13,7 @@ const upload = (id, type, file) => {
 
 const download = async (id, type) => {
     try {
-        const response = await httpCommon.get(`/api/file/download/${id}/${type}`, {
+        const response = await axios.get(`/file/download/${id}/${type}`, {
             responseType: 'blob',
         });
 
@@ -47,7 +47,7 @@ const download = async (id, type) => {
 }
 
 const deleteFiles = (id) => {
-    return httpCommon.delete(`/api/file/delete/${id}`);
+    return axios.delete(`/file/delete/${id}`);
 }
 
 export default { upload, download , deleteFiles};

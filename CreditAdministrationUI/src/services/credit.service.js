@@ -9,7 +9,7 @@ const getByUserId = (id) => {
 }
 
 const getListByIds = (list) => {
-    return axios.get(`/credit/listByIds/${list}`);
+    return axios.post(`/credit/listByIds`, list);
 }
 
 const create = (data) => {

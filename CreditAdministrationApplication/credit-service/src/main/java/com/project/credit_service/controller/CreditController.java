@@ -26,7 +26,7 @@ public class CreditController {
         return ResponseEntity.ok(creditService.getCredit(id));
     }
 
-    @GetMapping("/listByIds")
+    @PostMapping("/listByIds")
     public ResponseEntity<List<CreditEntity>> getAllById(@RequestBody List<Long> ids){
         return ResponseEntity.ok(creditService.getCreditsByIds(ids));
     }

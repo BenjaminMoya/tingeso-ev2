@@ -9,10 +9,12 @@ const getByCreditId = (id) => {
 }
 
 const relationCi = (creditId, requestedAmount, interest, years, monthlyEntry) => {
+    console.log("relationCi", creditId, requestedAmount, interest, years, monthlyEntry);
     return axios.get(`/evaluation/relationCI/${creditId}/${requestedAmount}/${interest}/${years}/${monthlyEntry}`);
 }
 
 const relationDi = (creditId, monthlyAmount, debtsMonthlyAmount, creditMonthlyAmount) => {
+    console.log("relationDi", creditId, monthlyAmount, debtsMonthlyAmount, creditMonthlyAmount);    
     return axios.get(`/evaluation/relationDI/${creditId}/${monthlyAmount}/${debtsMonthlyAmount}/${creditMonthlyAmount}`);
 }
 

@@ -27,7 +27,7 @@ export default function Sidemenu({ open, toggleDrawer }) {
     userService
     .getById(userId)
     .then((response) => {
-      setExecutive(response.data.executive);
+      setExecutive(response.data.userExecutive);
       if(userId){
         setLogged(true);
       }

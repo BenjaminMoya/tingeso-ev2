@@ -29,8 +29,8 @@ public class EvaluationService {
 
     public int relationCI(Long creditId,double requestedAmount,double interest,int years,double monthlyEntry){
         EvaluationEntity temp = getByCreditId(creditId);
-        double percentage = (restTemplate.getForObject("http://simulation-service/simulation/"+requestedAmount+"/"+interest+"/"+years, Double.class))/monthlyEntry;
-        if(percentage > 0.35){
+        double percentage = restTemplate.getForObject("http://simulation-service/simulation/"+requestedAmount+"/"+interest+"/"+years, Double.class);
+        if(percentage/monthlyEntry > 0.35){
             temp.setEvaluationRelationCi(0);
             saveEvaluation(temp);
             return 0;

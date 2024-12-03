@@ -134,7 +134,7 @@ const CreditApplication = () => {
           console.log("Ha ocurrido un error al crear el seguimiento.", error);
         });
         evaluationService
-        .create(creditId)
+        .create(tracking.trackingCreditId)
         .then((response) => {
           console.log("La evaluacion ha sido creada.", response.data);
         })

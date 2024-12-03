@@ -15,7 +15,7 @@ public class EvaluationController {
     EvaluationService evaluationService;
 
     @PostMapping("/save")
-    public ResponseEntity<EvaluationEntity> saveEvaluation(EvaluationEntity evaluation){
+    public ResponseEntity<EvaluationEntity> saveEvaluation(@RequestBody EvaluationEntity evaluation){
         return ResponseEntity.ok(evaluationService.saveEvaluation(evaluation));
     }
 

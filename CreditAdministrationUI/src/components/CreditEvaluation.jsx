@@ -24,6 +24,7 @@ import evaluationService from "../services/evaluation.service";
 import fileService from "../services/file.service";
 import simulationService from "../services/simulation.service";
 import costService from "../services/cost.service";
+import trackingService from "../services/tracking.service";
 
 const CreditEvaluation = () => {
 
@@ -36,6 +37,7 @@ const CreditEvaluation = () => {
   const [creditFirmDate,setCreditFirmDate] = useState(creditInit.creditFirmDate);
   const [creditType] = useState(creditInit.creditType);
   const [creditReason, setCreditReason] = useState("");
+  const [trackingPhase, setTrackingPhase] = useState(0);
   const [interest, setInterest] = useState("");
   const [monthlyEntry, setMonthlyEntry] = useState("");
   const [monthlyDeposit, setMonthlyDeposit] = useState("");
@@ -45,7 +47,7 @@ const CreditEvaluation = () => {
   const [relationDI, setRelationDI] = useState("");
   const [savingCapacity, setSavingCapacity] = useState("");
   const [age,setAge] = useState("");
-  const [executive,setExecutive] = useState("");
+  const [userExecutive,setuserExecutive] = useState("");
   const [workSeniority,setWorkSeniority] = useState("");
   const [indepedent,setIndependent] = useState("");
   const [selectedFile1, setSelectedFile1] = useState(null);
@@ -67,9 +69,21 @@ const CreditEvaluation = () => {
       console.log("Mostrando datos del usuario.", response.data);
       setCreditReason(creditInit.creditReason);
       setAge(response.data.userAge);
-      setExecutive(response.data.userExecutive);
+      setuserExecutive(response.data.userExecutive);
       setWorkSeniority(response.data.userWorkSeniority);
       setIndependent(response.data.userIndependent);
+      trackingService
+      .getByTrackingCreditId(creditId)
+      .then((response) => {
+        console.log("Mostrando datos del tracking.", response.data);
+        setTrackingPhase(response.data.trackingPhase);
+      })
+      .catch((error) => {
+        console.log(
+          "Ha ocurrido un error al intentar obtener el tracking.",
+          error
+        );
+      });
     })
     .catch((error) => {
       console.log(
@@ -718,7 +732,7 @@ const CreditEvaluation = () => {
     });
   }
 
-  if(executive && creditInit.creditPhase == 3){
+  if(userExecutive && trackingPhase == 3){
     return (
       <div>
         <br />
@@ -1016,7 +1030,7 @@ const CreditEvaluation = () => {
       </div>
     );
 
-  } else if (executive && creditInit.creditPhase == 5){ 
+  } else if (userExecutive && trackingPhase == 5){ 
 
     return (
       <Box
@@ -1095,7 +1109,7 @@ const CreditEvaluation = () => {
       </Box>
     );
 
-  } else if(!executive && creditInit.creditPhase == 6){ 
+  } else if(!userExecutive && trackingPhase == 6){ 
 
     return (
       <Box
@@ -1149,7 +1163,7 @@ const CreditEvaluation = () => {
       </Box>
     );
 
-  } else if(executive && creditInit.creditPhase == 9){ 
+  } else if(userExecutive && trackingPhase == 9){ 
 
     return (
       <Box
@@ -1185,7 +1199,7 @@ const CreditEvaluation = () => {
         <Link to="/credit/list">Volver a la lista</Link>
       </Box>
     );
-  } else if(!executive && creditInit.creditPhase == 0){ 
+  } else if(!userExecutive && trackingPhase == 0){ 
 
     return (
       <Box
@@ -1232,10 +1246,10 @@ const CreditEvaluation = () => {
           {creditType== 4 && (
             <p> Tipo de credito: Remodelacion </p>
           )}
-          {creditInit.creditPhase == 3 && (
+          {trackingPhase == 3 && (
             <p>Etapa: En evaluacion </p>
           )}
-          {creditInit.creditPhase == 4 && (
+          {trackingPhase == 4 && (
             <div>
               <p>Etapa: Pre-aprobada </p>
               <p>Cargo administrativo: ${creditInit.creditRequestedAmount*0.01} (CLP)</p>
@@ -1271,13 +1285,13 @@ const CreditEvaluation = () => {
               </FormControl>
             </div>
           )}
-          {creditInit.creditPhase == 5 && (
+          {trackingPhase == 5 && (
             <p>Etapa: Preparacion de documentacion </p>
           )}
-          {creditInit.creditPhase == 6 && (
+          {trackingPhase == 6 && (
             <p>Etapa: Lista para desembolso</p>
           )}
-          {creditInit.creditPhase == 7 && (
+          {trackingPhase == 7 && (
             <div>
               <p>Etapa: Rechazada </p>
               <p>Indicaciones: </p>
@@ -1300,7 +1314,7 @@ const CreditEvaluation = () => {
             </div>
             
           )}
-          {creditInit.creditPhase == 9 && (
+          {trackingPhase == 9 && (
             <p>Etapa: En desembolso </p>
           )}
           <br />
