@@ -38,6 +38,7 @@ const CreditEvaluation = () => {
   const [creditType] = useState(creditInit.creditType);
   const [creditReason, setCreditReason] = useState("");
   const [trackingPhase, setTrackingPhase] = useState(0);
+  const [costs, setCosts] = useState([]);
   const [interest, setInterest] = useState("");
   const [monthlyEntry, setMonthlyEntry] = useState("");
   const [monthlyDeposit, setMonthlyDeposit] = useState("");
@@ -77,6 +78,16 @@ const CreditEvaluation = () => {
       .then((response) => {
         console.log("Mostrando datos del tracking.", response.data);
         setTrackingPhase(response.data.trackingPhase);
+        costService
+        .getByCreditId(creditId)
+        .then((response) => {
+          console.log("Mostrando datos del costo.", response.data);
+          setCosts(response.data);
+        }
+        )
+        .catch((error) => {
+          console.log("Ha ocurrido un error al intentar obtener el costo.", error);
+        });
       })
       .catch((error) => {
         console.log(
@@ -424,9 +435,8 @@ const CreditEvaluation = () => {
     .create(creditRequestedAmount,interest,creditTerm,creditId)
     .then((response) => {
       console.log("Cuota mensual: ", response.data);
-      const credit = { creditId, creditUserId, creditPropertyAmount:creditInit.creditPropertyAmount, creditRequestedAmount, creditProposedAmount:response.data.costMonthlyAmount, creditPhase:4 ,creditTerm, creditFirmDate, creditType, creditReason};
-      creditService
-      .update(credit)
+      trackingService
+      .newPhase(creditId,4)
       .then((response) => {
         console.log("El credito ha sido aprobado.", response.data);
         navigate("/credit/list");
@@ -455,7 +465,18 @@ const CreditEvaluation = () => {
     .update(credit)
     .then((response) => {
       console.log("El credito ha sido rechazado.", response.data);
-      navigate("/credit/list");
+      trackingService
+      .newPhase(creditId,7)
+      .then((response) => {
+        console.log("El credito ha sido rechazado.", response.data);
+        navigate("/credit/list");
+      })
+      .catch((error) => {
+        console.log(
+          "Ha ocurrido un error al intentar rechazar el credito.",
+          error
+        );
+      });
     })
     .catch((error) => {
       console.log(
@@ -468,12 +489,23 @@ const CreditEvaluation = () => {
   const accept = (e) => {
     e.preventDefault();
 
-    const credit = { creditId, creditUserId, creditPropertyAmount:creditInit.creditPropertyAmount, creditRequestedAmount, creditProposedAmount:creditInit.creditProposedAmount, creditPhase:5 ,creditTerm, creditFirmDate, creditType, creditReason:creditInit.creditReason};
+    const credit = { creditId, creditUserId, creditPropertyAmount:creditInit.creditPropertyAmount, creditRequestedAmount,creditTerm, creditFirmDate, creditType, creditReason:creditInit.creditReason};
     creditService
     .update(credit)
     .then((response) => {
       console.log("El credito ha sido aprobado.", response.data);
-      navigate("/user/credits");
+      trackingService
+      .newPhase(creditId,5)
+      .then((response) => {
+        console.log("El credito ha sido aprobado.", response.data);
+        navigate("/user/credits");
+      })
+      .catch((error) => {
+        console.log(
+          "Ha ocurrido un error al intentar aprobar el credito.",
+          error
+        );
+      });
     })
     .catch((error) => {
       console.log("Ha ocurrido un error al intentar aprobar el credito.", error);
@@ -491,7 +523,33 @@ const CreditEvaluation = () => {
       .deleteFiles(creditId)
       .then((response) => {
         console.log("Los archivos han sido eliminados.", response.data);
-        navigate("/user/credits");
+        trackingService
+        .deleteTracking(creditId)
+        .then((response) => {
+          console.log("El tracking ha sido eliminado.", response.data);
+          costService
+          .deleteCost(creditId)
+          .then((response) => {
+            console.log("El costo ha sido eliminado.", response.data);
+            evaluationService
+            .deleteEvaluation(creditId)
+            .then((response) => {
+              console.log("La evaluacion ha sido eliminada.", response.data);
+              navigate("/user/credits");
+            })
+            .catch((error) => {
+              console.log("Ha ocurrido un error al intentar eliminar la evaluacion.", error);
+            });
+          })
+          .catch((error) => {
+            console.log("Ha ocurrido un error al intentar eliminar el costo.", error);
+          })
+        }
+        )
+        .catch((error) => {
+          console.log("Ha ocurrido un error al intentar eliminar el tracking.", error);
+        }
+        );
       })
       .catch((error) => {
         console.log("Ha ocurrido un error al intentar eliminar los archivos.", error);
@@ -513,17 +571,25 @@ const CreditEvaluation = () => {
       return alert("Debe subir el contrato");
     }
 
-    const credit = { creditId, creditUserId, creditPropertyAmount:creditInit.creditPropertyAmount, creditRequestedAmount, creditProposedAmount:creditInit.creditProposedAmount, creditPhase:6 ,creditTerm, creditFirmDate:formatDate, creditType, creditReason:creditInit.creditReason};
+    const credit = { creditId, creditUserId, creditPropertyAmount:creditInit.creditPropertyAmount, creditRequestedAmount ,creditTerm, creditFirmDate:formatDate, creditType, creditReason:creditInit.creditReason};
 
-    creditService
-    .update(credit)
+    trackingService
+    .newPhase(creditId,6)
     .then((response) => {
       console.log("El credito ha sido aprobado.", response.data);
       fileService
       .upload(creditId,8,selectedFile1)
       .then((response) => {
         console.log("El contrato ha sido subido.", response.data);
-        navigate("/user/credits");
+        creditService
+        .update(credit)
+        .then((response) => {
+          console.log("El credito ha sido aprobado.", response.data);
+          navigate("/user/credits");
+        })
+        .catch((error) => {
+          console.log("Ha ocurrido un error al intentar aprobar el credito.", error);
+        });
       })
       .catch((error) => {
         console.log("Ha ocurrido un error al intentar subir el contrato.", error);
@@ -538,10 +604,8 @@ const CreditEvaluation = () => {
   const finalAccept = (e) => {
     e.preventDefault();
 
-    const credit = { creditId, creditUserId, creditPropertyAmount:creditInit.creditPropertyAmount, creditRequestedAmount, creditProposedAmount:creditInit.creditProposedAmount, creditPhase:9 ,creditTerm, creditFirmDate, creditType, creditReason:creditInit.creditReason};
-
-    creditService
-    .update(credit)
+    trackingService
+    .newPhase(creditId,9)
     .then((response) => {
       console.log("El credito ha sido aprobado.", response.data);
       navigate("/user/credits");
@@ -554,13 +618,12 @@ const CreditEvaluation = () => {
   const transfer = (e) => {
     e.preventDefault();
 
-    const credit = { creditId, creditUserId, creditPropertyAmount:creditInit.creditPropertyAmount, creditRequestedAmount, creditProposedAmount:creditInit.creditProposedAmount, creditPhase:0 ,creditTerm, creditFirmDate, creditType, creditReason:creditInit.creditReason};
     userService
     .transfer(creditUserId,creditId)
     .then((response) => {
       console.log("El credito ha sido transferido.", response.data);
-      creditService
-      .update(credit)
+      trackingService
+      .newPhase(creditId,0)
       .then((response) => {
         console.log("El credito ha sido completado.", response.data);
         navigate("/credit/list");
@@ -1159,7 +1222,7 @@ const CreditEvaluation = () => {
           </FormControl>
         </form>
         <br />
-        <Link to="/credit/list">Volver a la lista</Link>
+        <Link to="/user/credits">Volver a la lista</Link>
       </Box>
     );
 
@@ -1253,9 +1316,9 @@ const CreditEvaluation = () => {
             <div>
               <p>Etapa: Pre-aprobada </p>
               <p>Cargo administrativo: ${creditInit.creditRequestedAmount*0.01} (CLP)</p>
-              <p>Propuesta de cuota mensual: ${creditInit.creditProposedAmount} (CLP)</p>
+              <p>Propuesta de cuota mensual: ${costs.costMonthlyAmount} (CLP)</p>
               <Tooltip title="Total de cuotas mensuales en conjunto del cargo administrativo" arrow>
-                <p>Propuesta de monto final: ${(creditInit.creditProposedAmount*12*creditInit.creditTerm)+creditInit.creditRequestedAmount*0.01} (CLP)</p>
+                <p>Propuesta de monto final: ${(costs.costMonthlyAmount*12*creditInit.creditTerm)+creditInit.creditRequestedAmount*0.01} (CLP)</p>
               </Tooltip>
               <FormControl>
                 <br />

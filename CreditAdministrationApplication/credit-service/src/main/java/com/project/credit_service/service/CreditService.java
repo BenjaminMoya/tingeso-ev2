@@ -30,6 +30,10 @@ public class CreditService {
         return creditRepository.findAllById(creditIds);
     }
 
+    public List<Long> getCreditsIdsByUserId(Long creditUserId){
+        return creditRepository.findCreditIdsByUserIdNative(creditUserId);
+    }
+
     public CreditEntity saveCredit(CreditEntity credit){
         return creditRepository.save(credit);
     }

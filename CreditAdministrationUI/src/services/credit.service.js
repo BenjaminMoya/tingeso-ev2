@@ -12,6 +12,10 @@ const getListByIds = (list) => {
     return axios.post(`/credit/listByIds`, list);
 }
 
+const getListIdsByUserId = (id) => {
+    return axios.get(`/credit/listByUserId/${id}`);
+}
+
 const create = (data) => {
   return axios.post('/credit/save', data);
 }
@@ -24,4 +28,4 @@ const deleteCredit = (id) => {
     return axios.delete(`/credit/delete/${id}`);
 }
 
-export default { getById, getByUserId, getListByIds, create, update, deleteCredit };
+export default { getById, getByUserId, getListByIds, create, update, deleteCredit, getListIdsByUserId };

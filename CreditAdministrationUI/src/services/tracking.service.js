@@ -16,8 +16,16 @@ const update = (data) => {
     return axios.put('/tracking/update', data);
 }
 
+const newPhase = (id, phase) => {
+    return axios.put(`/tracking/newPhase/${id}/${phase}`);
+}
+
 const deleteTracking = (id) => {
     return axios.delete(`/tracking/delete/${id}`);
 }
 
-export default { getByTrackingCreditId, getCreditIdsByPhase, create, update, deleteTracking };
+const getTrackingsByCreditIds = (ids) => {
+    return axios.post(`/tracking/getTrackingsByCreditIds`, ids);
+}
+
+export default { getByTrackingCreditId, getCreditIdsByPhase, create, update, deleteTracking, newPhase,  getTrackingsByCreditIds};

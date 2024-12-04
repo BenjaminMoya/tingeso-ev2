@@ -26,6 +26,11 @@ public class TrackingController {
         return ResponseEntity.ok(trackingService.getTrackingCreditIds(phase));
     }
 
+    @PostMapping("/getTrackingsByCreditIds")
+    public ResponseEntity<List<TrackingEntity>> getTrackingsByCreditIds(@RequestBody List<Long> ids){
+        return ResponseEntity.ok(trackingService.getTrackingsByCreditIds(ids));
+    }
+
     @PostMapping("/save")
     public ResponseEntity<TrackingEntity> saveTracking(@RequestBody TrackingEntity tracking){
         return ResponseEntity.ok(trackingService.saveTracking(tracking));
@@ -34,6 +39,12 @@ public class TrackingController {
     @PutMapping("/update")
     public ResponseEntity<TrackingEntity> updateTracking(@RequestBody TrackingEntity tracking){
         return ResponseEntity.ok(trackingService.saveTracking(tracking));
+    }
+
+    @PutMapping("/newPhase/{id}/{phase}")
+    public ResponseEntity<TrackingEntity> newPhase(@PathVariable Long id,
+                                                   @PathVariable int phase){
+        return ResponseEntity.ok(trackingService.newPhase(id,phase));
     }
 
     @DeleteMapping("/delete/{id}")

@@ -13,4 +13,7 @@ public interface TrackingRepository extends JpaRepository<TrackingEntity,Long> {
     TrackingEntity findByTrackingCreditId(Long trackingCreditId);
     @Query("SELECT t.trackingCreditId FROM TrackingEntity t WHERE t.trackingPhase = :phase")
     List<Long> findTrackingCreditIdByTrackingPhase(@Param("phase") int phase);
+    @Query("SELECT t FROM TrackingEntity t WHERE t.trackingCreditId IN :creditIds")
+    List<TrackingEntity> findTrackingsByCreditIds(@Param("creditIds") List<Long> creditIds);
+
 }

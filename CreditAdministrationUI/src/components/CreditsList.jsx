@@ -139,7 +139,7 @@ const CreditsList = () => {
                 )}
                 <TableCell align="right">{credit.creditRequestedAmount}</TableCell>
                 <TableCell align="center">{credit.creditTerm}</TableCell>
-                <TableCell align="center">{credit.creditPhase}</TableCell>
+                <TableCell align="center">3</TableCell>
                 <TableCell>
                 <Button
                   variant="contained"
@@ -178,7 +178,7 @@ const CreditsList = () => {
                 )}
                 <TableCell align="right">{credit.creditRequestedAmount}</TableCell>
                 <TableCell align="center">{credit.creditTerm}</TableCell>
-                <TableCell align="center">{credit.creditPhase}</TableCell>
+                <TableCell align="center">5</TableCell>
                 <TableCell>
                 <Button
                   variant="contained"
@@ -217,7 +217,7 @@ const CreditsList = () => {
                 )}
                 <TableCell align="right">{credit.creditRequestedAmount}</TableCell>
                 <TableCell align="center">{credit.creditTerm}</TableCell>
-                <TableCell align="center">{credit.creditPhase}</TableCell>
+                <TableCell align="center">9</TableCell>
                 <TableCell>
                 <Button
                   variant="contained"

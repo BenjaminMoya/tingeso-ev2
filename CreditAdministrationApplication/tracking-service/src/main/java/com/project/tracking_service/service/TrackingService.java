@@ -22,6 +22,16 @@ public class TrackingService {
         return trackingRepository.save(tracking);
     }
 
+    public List<TrackingEntity> getTrackingsByCreditIds(List<Long> ids){
+        return trackingRepository.findTrackingsByCreditIds(ids);
+    }
+
+    public TrackingEntity newPhase(Long id, int phase){
+        TrackingEntity temp = getByTrackingCreditId(id);
+        temp.setTrackingPhase(phase);
+        return trackingRepository.save(temp);
+    }
+
     public List<Long> getTrackingCreditIds(int trackingPhase){
         return trackingRepository.findTrackingCreditIdByTrackingPhase(trackingPhase);
     }
