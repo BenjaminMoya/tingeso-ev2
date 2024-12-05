@@ -18,7 +18,7 @@ spring:
           - DedupeResponseHeader=Acces-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
         cors-configurations:
           '[/**]':
-            allowed-origin.patterns: '*'
+            allowed-origin-patterns: '*'
             allowed-methods: "*"
             allowedHeaders: "*"
             allowCredentials: true
