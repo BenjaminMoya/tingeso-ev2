@@ -14,17 +14,13 @@ spring:
   cloud:
     gateway:
       globalcors:
+        default-filters:
+          - DedupeResponseHeader=Acces-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
         cors-configurations:
           '[/**]':
-            allowedOrigins: "http://localhost:5173"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
-            allowedHeaders:
-              - "*"
+            allowed-origin.patterns: '*'
+            allowed-methods: "*"
+            allowedHeaders: "*"
             allowCredentials: true
       discovery:
         locator:
