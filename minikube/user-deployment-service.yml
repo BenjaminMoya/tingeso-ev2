@@ -23,28 +23,28 @@ spec:
             - name: SPRING_CLOUD_CONFIG_URI
               value: http://config-service:8081
             - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-              value: http://eureka-service:8761
-            - name: eureka.instance.preferIpAddress
+              value: http://eureka-service:8761/eureka
+            - name: EUREKA_INSTANCE_PREFERIPADDRESS
               value: "true"
             - name: POSTGRES_DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-config-map
+                  name: postgres-userdb
                   key: POSTGRES_DB_HOST
             - name: POSTGRES_DB_USER
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-config-map
+                  name: postgres-userdb
                   key: POSTGRES_DB_USER
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: postgres-credentials
+                  name: postgres-user-credentials
                   key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-credentials
+                  name: postgres-user-credentials
                   key: POSTGRES_PASSWORD
 ---
 apiVersion: v1
@@ -58,6 +58,6 @@ spec:
     app: user-deployment
   ports:
     - protocol: TCP
-      port: 8095
-      targetPort: 8095
+      port: 8096
+      targetPort: 8081
   type: LoadBalancer

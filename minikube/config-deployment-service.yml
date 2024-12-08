@@ -17,6 +17,7 @@ spec:
       containers:
         - name: kubernetes-config
           image: benjaminmoya/kubernetes-config:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8081
 ---

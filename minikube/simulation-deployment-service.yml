@@ -58,6 +58,6 @@ spec:
     app: simulation-deployment
   ports:
     - protocol: TCP
-      port: 8093
-      targetPort: 8093
+      port: 8094
+      targetPort: 8094
   type: LoadBalancer

@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: postgres-db
 data:
+  POSTGRES_DB_HOST: postgres
   POSTGRES_DB: postgres
 ---
 apiVersion: v1
@@ -10,96 +11,61 @@ kind: ConfigMap
 metadata:
   name: postgres-costdb
 data:
-  host: postgres  
-  name: costdb
+  POSTGRES_DB_HOST: postgres 
+  POSTGRES_DB_COST: costdb
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-creditdb
 data:
-  host: postgres  
-  name: creditdb
+  POSTGRES_DB_HOST: postgres 
+  POSTGRES_DB_CREDIT: creditdb
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-evaluationdb
 data:
-  host: postgres  
-  name: evaluationdb
+  POSTGRES_DB_HOST: postgres 
+  POSTGRES_DB_EVALUATION: evaluationdb
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-filedb
 data:
-  host: postgres  
-  name: filedb
+  POSTGRES_DB_HOST: postgres 
+  POSTGRES_DB_FILE: filedb
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-simulationdb
 data:
-  host: postgres  
-  name: simulationdb
+  POSTGRES_DB_HOST: postgres 
+  POSTGRES_DB_SIMULATION: simulationdb
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-trackingdb
 data:
-  host: postgres  
-  name: trackingdb
+  POSTGRES_DB_HOST: postgres 
+  POSTGRES_DB_TRACKING: trackingdb
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-userdb
 data:
-  host: postgres  
-  name: userdb
+  POSTGRES_DB_HOST: postgres 
+  POSTGRES_DB_USER: userdb
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-init-script
 data:
-  init.sql: | 
-    DO $$ BEGIN
-      IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'costdb') THEN
-        CREATE DATABASE costdb;
-      END IF;
-    END $$;
-    DO $$ BEGIN
-      IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'creditdb') THEN
-        CREATE DATABASE creditdb;
-      END IF;
-    END $$;
-    DO $$ BEGIN
-      IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'evaluationdb') THEN
-        CREATE DATABASE evaluationdb;
-      END IF;
-    END $$;
-    DO $$ BEGIN
-      IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'filedb') THEN
-        CREATE DATABASE filedb;
-      END IF;
-    END $$;
-    DO $$ BEGIN
-      IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'simulationdb') THEN
-        CREATE DATABASE simulationdb;
-      END IF;
-    END $$;
-    DO $$ BEGIN
-      IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'trackingdb') THEN
-        CREATE DATABASE trackingdb;
-      END IF;
-    END $$;
-    DO $$ BEGIN
-      IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'userdb') THEN
-        CREATE DATABASE userdb;
-      END IF;
-    END $$;
-
+  script.sql: |
+    CREATE DATABASE userdb;

@@ -58,6 +58,6 @@ spec:
     app: tracking-deployment
   ports:
     - protocol: TCP
-      port: 8094
-      targetPort: 8094
+      port: 8095
+      targetPort: 8095
   type: LoadBalancer

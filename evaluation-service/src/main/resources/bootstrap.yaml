@@ -7,7 +7,7 @@ spring:
       uri: http://localhost:8081
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/evaluation
+    url: jdbc:postgresql://localhost:5432/evaluationdb
     username: justzenny
     password: 1234
   jpa:

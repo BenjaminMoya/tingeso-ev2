@@ -8,14 +8,14 @@ spec:
   selector:
     matchLabels:
       app: frontend-deployment
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
         app: frontend-deployment
     spec:
       containers:
-       - name: frontend
-         image: benjaminmoya/kubernetes-frontend
-         ports:
-            - containerPort: 80
+        - name: frontend
+          image: benjaminmoya/kubernetes-frontend:latest
+          ports:
+            - containerPort: 5173
