@@ -1,1 +1,7 @@
+CREATE DATABASE costdb;
+CREATE DATABASE creditdb;
+CREATE DATABASE evaluationdb;
+CREATE DATABASE filedb;
+CREATE DATABASE simulationdb;
+CREATE DATABASE trackingdb;
 CREATE DATABASE userdb;

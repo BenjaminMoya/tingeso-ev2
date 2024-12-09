@@ -29,22 +29,22 @@ spec:
             - name: POSTGRES_DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-config-map
+                  name: postgres-trackingdb
                   key: POSTGRES_DB_HOST
             - name: POSTGRES_DB_TRACKING
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-config-map
+                  name: postgres-trackingdb
                   key: POSTGRES_DB_TRACKING
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: postgres-credentials
+                  name: postgres-user-credentials
                   key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-credentials
+                  name: postgres-user-credentials
                   key: POSTGRES_PASSWORD
 ---
 apiVersion: v1
