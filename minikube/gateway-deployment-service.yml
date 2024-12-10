@@ -18,7 +18,7 @@ spec:
           - name: kubernetes-gateway
             image: benjaminmoya/kubernetes-gateway:latest
             ports:
-              - containerPort: 8081
+              - containerPort: 8080
             env:
               - name: SPRING_CLOUD_CONFIG_URI
                 value: http://config-service:8081
@@ -39,6 +39,5 @@ spec:
   ports:
     - protocol: TCP
       port: 8080
-      targetPort: 8081
-      nodePort: 30000
-  type: NodePort
+      targetPort: 8080
+  type: LoadBalancer
