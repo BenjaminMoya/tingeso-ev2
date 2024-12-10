@@ -7,37 +7,37 @@ export default defineConfig({
   server: {
     proxy: {
       '/user': {
-        target: 'http://localhost:8080',
+        target: 'http://192.168.67.2:30000',
         changeOrigin: true,
         secure: false,
       },
       '/credit': {
-        target: 'http://localhost:8080',
+        target: 'http://192.168.67.2:30000',
         changeOrigin: true,
         secure: false,
       },
       '/file': {
-        target: 'http://localhost:8080',
+        target: 'http://192.168.67.2:30000',
         changeOrigin: true,
         secure: false,
       },
       '/simulation': {
-        target: 'http://localhost:8080',
+        target: 'http://192.168.67.2:30000',
         changeOrigin: true,
         secure: false,
       },
       '/evaluation': {
-        target: 'http://localhost:8080',
+        target: 'http://192.168.67.2:30000',
         changeOrigin: true,
         secure: false,
       },
       '/cost': {
-        target: 'http://localhost:8080',
+        target: 'http://192.168.67.2:30000',
         changeOrigin: true,
         secure: false,
       },
       '/tracking': {
-        target: 'http://localhost:8080',
+        target: 'http://192.168.67.2:30000',
         changeOrigin: true,
         secure: false,
       },
