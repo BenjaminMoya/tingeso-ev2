@@ -21,7 +21,7 @@ const create = (data) => {
 }
 
 const login = (data) => {
-  return axios.post('http://192.168.67.2:30000/user/login', data);
+  return axios.post('/user/login', data);
 }
 
 const transfer = (userId,creditId) => {
