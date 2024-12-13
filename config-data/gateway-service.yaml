@@ -6,7 +6,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      default-zone:  http://eureka-service:8761/eureka
+      default-zone: http://eureka-service:8761/eureka
     instance:
       hostname: localhost
 
@@ -15,7 +15,7 @@ spring:
     gateway:
       globalcors:
         default-filters:
-          - DedupeResponseHeader=Acces-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+          - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_UNIQUE
         cors-configurations:
           '[/**]':
             allowed-origin-patterns: '*'
@@ -54,3 +54,12 @@ spring:
           uri: lb://cost-service
           predicates:
             - Path=/cost/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
